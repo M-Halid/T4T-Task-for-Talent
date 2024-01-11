@@ -6,6 +6,6 @@ import SignIn from './components/SignIn/SignIn.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <SignIn />
+    <App />
   </React.StrictMode>,
 )

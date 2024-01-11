@@ -36,7 +36,7 @@ const SignIn = () => {
         console.error('Error:', error.message);
       }
     };
-//https://codepen.io/rikosteo/pen/vwrwMe sign in form template
+
   return (
     <div className="flex-container">
       <div className="content-container">
@@ -54,7 +54,7 @@ const SignIn = () => {
             <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <br />
             <br />
-            <input type="submit" value="Sign In" className="btn btn-outline btn-accent" onClick={handleSignIn}/>
+            <button type="submit" className="btn btn-outline btn-accent" onClick={handleSignIn}>Sign In</button>
           </form>
         </div>
       </div>
