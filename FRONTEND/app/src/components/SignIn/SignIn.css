@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 html {
     scroll-behavior: smooth;
@@ -100,25 +98,7 @@ html {
     width: 300px;
   }
   
-  /*.submit-btn {
-    cursor: pointer;
-  
-    border: none;
-    border-radius: 8px;
-  
-    box-shadow: 2px 2px 7px #38d39f70;
-  
-    background: #38d39f;
-    color: rgba(255, 255, 255, 0.8);
-  
-    width: 80px;
-  
-    transition: all 1s;
+  .btn-outline {
+    border: solid;
+
   }
-  
-  .submit-btn:hover {
-    color: rgb(255, 255, 255);
-  
-    box-shadow: none;
-  }
-  */
