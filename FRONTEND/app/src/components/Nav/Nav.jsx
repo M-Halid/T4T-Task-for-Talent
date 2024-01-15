@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Menu from "./Menu";
+import Menu2 from "./Menu2";
 import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
   const items = [
     { name: "Home", path: "/" },
     { name: "Item 1", path: "/page1" },
@@ -15,6 +17,10 @@ const Nav = () => {
   const handleButtonClick = (event) => {
     event.stopPropagation();
     setIsOpen(!isOpen);
+  };
+  const handleButtonClick2 = (event) => {
+    event.stopPropagation();
+    setIsOpen2(!isOpen2);
   };
 
   return (
@@ -45,7 +51,10 @@ const Nav = () => {
         </a>
       </div>
       <div className="flex-none">
-        <button className="btn btn-square btn-ghost">
+        <button
+          className="btn btn-square btn-ghost"
+          onClick={handleButtonClick2}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -60,6 +69,16 @@ const Nav = () => {
             ></path>
           </svg>
         </button>
+        {isOpen && <Menu items={items} setIsOpen={setIsOpen} />}
+        {isOpen2 && (
+          <Menu2
+            items={[
+              { name: "Signin", path: "/signin" },
+              { name: "Signup", path: "/signup" },
+            ]}
+            setIsOpen={setIsOpen2}
+          />
+        )}
       </div>
       {isOpen && <Menu items={items} setIsOpen={setIsOpen} />}
     </div>

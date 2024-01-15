@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Nav from "./components/Nav/Nav.jsx";
 import HeroSection from "./components/HeroSection/HeroSection.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import Signin from "./pages/Signin";
+import Signup from "./pages/Signup";
 
 // Import your page components here
 import Page1 from "./pages/Page1";
@@ -24,6 +26,8 @@ function App() {
         <Route path="/page1" element={<Page1 />} />
         <Route path="/page2" element={<Page2 />} />
         <Route path="/page3" element={<Page3 />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
 
       <Footer />
