@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const SignIn = () => {
 
   return (
-    <div className="card lg:card-side bg-base-100 shadow-xl ">
+    <div className="card bg-base-100 shadow-xl ">
     <div className="hero-content flex-col lg:flex-row-reverse ">
       <div className="card shrink-0 w-full max-w-md  shadow-2xl bg-base-100">
         <form className="card-body">
