@@ -1,9 +1,9 @@
+import SignUp from "../components/Signup/Signup"
+
 const Signup = () => {
   return (
-    <>
-      <h1>Signup</h1>
-    </>
-  );
+    <SignUp/>
+);
 };
 
 export default Signup;
