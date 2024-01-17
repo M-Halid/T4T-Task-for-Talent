@@ -3,7 +3,6 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import userRoutes from "./routes/user.route.js";
 import { connectToDb } from "./configs/db.connect.js";
-//import { calculateFaceLocation, callClarifaiApi } from "./faceDetection.js";
 
 const app = express();
 connectToDb();
@@ -23,6 +22,7 @@ app.use((req, res, next) => {
 
 app.use(userRoutes);
 
-app.listen(3000, () => {
-  console.log("Server running on port 3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
 });
