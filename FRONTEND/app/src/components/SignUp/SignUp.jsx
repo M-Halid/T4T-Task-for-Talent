@@ -43,7 +43,7 @@ const SignUp = () => {
                   <label className="label">
                     <span className="label-text">Name</span>
                   </label>
-                  <input type="text" placeholder="name" className="input input-bordered" required  onChange={(e) => setName(e.target.value)} />
+                  <input type="text" name='name' placeholder="name" className="input input-bordered" required  onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className="form-control">
                   <label className="label">
