@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -11,9 +11,12 @@ const SignUp = () => {
       entries: 0,
       joined: "",
     });
+    const navigate = useNavigate();
+
     const onRegister = (newUser) => {
       setUser(newUser);
     };
+
     const handleRegister = (event) => {
       event.preventDefault();
       fetch("http://localhost:3000/register", {
@@ -31,7 +34,8 @@ const SignUp = () => {
             onRegister(user);
           }
         });
-    };
+        navigate("/");
+      };
   
 
     return (

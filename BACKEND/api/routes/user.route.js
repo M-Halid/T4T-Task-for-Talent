@@ -4,6 +4,8 @@ import {
   signin,
   register,
   getProfile,
+  updateProfileTalent,
+  updateProfileTask
  
 } from "../controllers/user.controller.js";
 
@@ -13,4 +15,6 @@ router.get("/", getUsers);
 router.post("/signin", signin);
 router.post("/register", register);
 router.get("/profile/:id", getProfile);
+router.post("/submitTalent", updateProfileTalent);
+router.post("/submitTask", updateProfileTask);
 export default router;

@@ -1,6 +1,7 @@
-import bcrypt from "bcrypt";
+      import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
-//import { callClarifaiApi, calculateFaceLocation } from "../faceDetection.js";
+import {TalentProfileModel} from "../models/talent.model.js";
+import {TaskProfileModel} from "../models/task.model.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -62,12 +63,37 @@ export const register = async (req, res) => {
       entries: 0,
       joined: new Date(),
     });
-
     const newUser = await user.save();
-    res.json(newUser);
+    res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+export const updateProfileTalent = async (req, res) => {
+  // Handle form submission
+    try {
+      const talentProfile = new TalentProfileModel(req.body);
+      await talentProfile.save();
+      console.log(talentProfile);
+      res.status(201).json({ message: 'Talent profile submitted successfully!' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+};
+
+export const updateProfileTask = async (req, res) => {
+  // Handle form submission
+    try {
+      const taskProfile = new TaskProfileModel(req.body);
+      await taskProfile.save();
+      console.log(taskProfile);
+      res.status(201).json({ message: 'Task profile submitted successfully!' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
 };
 
 export const getProfile = async (req, res) => {
@@ -85,14 +111,12 @@ export const getProfile = async (req, res) => {
   }
 };
 
-export const updateImage = async (req, res) => {
-  const { id, imageUrl } = req.body;
 
-  // Check if id and imageUrl are provided
-  if (!id || !imageUrl) {
-    console.log("Missing id or imageUrl"); // Log if id or imageUrl is missing
-    return res.status(400).json({ message: "Missing id or imageUrl" });
-  }
+
+
+
+
+
 
   /*try {
     const user = await User.findById(id);
@@ -127,4 +151,4 @@ export const updateImage = async (req, res) => {
     console.log("Error in updateImage:", error); // Log any errors that occur during the function
     res.status(500).json({ message: error.message });
   }*/
-};
+
