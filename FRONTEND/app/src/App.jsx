@@ -19,14 +19,7 @@ function App() {
   }, [mode]);
   return (
     <Router>
-      <Nav
-        items={[
-          { name: "Home", path: "/" },
-          { name: "Item 1", path: "/page1" },
-          { name: "Item 2", path: "/page2" },
-          { name: "Item 3", path: "/page3" },
-        ]}
-      />
+      <Nav />
       <Routes>
         <Route path="/" element={<HeroSection />} />
         <Route path="/page1" element={<Page1 />} />
