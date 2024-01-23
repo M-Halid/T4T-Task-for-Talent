@@ -10,11 +10,15 @@ const Nav = () => {
   const navigate = useNavigate();
   const { mode, setMode } = useContext(ModeContext);
 
-  const items = [
+  const menu1Items = [
     { name: "Home", path: "/" },
     { name: "Item 1", path: "/page1" },
     { name: "Item 2", path: "/page2" },
     { name: "Item 3", path: "/page3" },
+  ];
+  const menu2Items = [
+    { name: "Signin", path: "/signin" },
+    { name: "Signup", path: "/signup" },
   ];
 
   const handleButtonClick = (event) => {
@@ -115,18 +119,9 @@ const Nav = () => {
             ></path>
           </svg>
         </button>
-        {isOpen && <Menu items={items} setIsOpen={setIsOpen} />}
-        {isOpen2 && (
-          <Menu2
-            items={[
-              { name: "Signin", path: "/signin" },
-              { name: "Signup", path: "/signup" },
-            ]}
-            setIsOpen={setIsOpen2}
-          />
-        )}
+        {isOpen && <Menu items={menu1Items} setIsOpen={setIsOpen} />}
+        {isOpen2 && <Menu2 items={menu2Items} setIsOpen={setIsOpen2} />}
       </div>
-      {isOpen && <Menu items={items} setIsOpen={setIsOpen} />}
     </div>
   );
 };

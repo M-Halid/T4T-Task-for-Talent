@@ -8,10 +8,11 @@ const localizer = momentLocalizer(moment);
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
+  const [selectedSlots, setSelectedSlots] = useState([]);
 
   const handleSelect = ({ start, end }) => {
     const title = window.prompt("New Event name");
-    if (title)
+    if (title) {
       setEvents([
         ...events,
         {
@@ -20,6 +21,21 @@ const Calendar = () => {
           title,
         },
       ]);
+      setSelectedSlots([]);
+    }
+  };
+
+  const slotPropGetter = (date) => {
+    if (selectedSlots.some((selectedSlot) => +selectedSlot === +date)) {
+      return {
+        className: "selected",
+      };
+    }
+  };
+
+  const handleSelecting = (range) => {
+    setSelectedSlots(getDates(range.start, range.end));
+    return true;
   };
 
   return (
@@ -32,9 +48,22 @@ const Calendar = () => {
         startAccessor="start"
         endAccessor="end"
         onSelectSlot={handleSelect}
+        onSelecting={handleSelecting}
+        slotPropGetter={slotPropGetter}
       />
     </div>
   );
 };
+
+// Helper function to get dates between start and end
+function getDates(startDate, endDate) {
+  let dates = [];
+  let currentDate = startDate;
+  while (currentDate <= endDate) {
+    dates.push(new Date(currentDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  return dates;
+}
 
 export default Calendar;
