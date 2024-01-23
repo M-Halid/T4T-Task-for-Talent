@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -10,6 +12,7 @@ const SignIn = () => {
     entries: 0,
     joined: "",
   });
+  const navigate = useNavigate();
 
   const loadUser = (data) => {
     setUser({
@@ -38,8 +41,7 @@ const SignIn = () => {
       .then((user) => {
         if (user._id) {
           loadUser(user);
-          console.log(user);
-         
+          navigate("/");
         }
       })
       .catch((error) => {
