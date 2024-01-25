@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 const TalentProfile = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    skills: '',
-    workingFields: '',
-    age: '',
+    name: "",
+    skills: "",
+    workingFields: "",
+    age: "",
     gender: null,
-    location: '',
-    background: '',
+    location: "",
+    background: "",
     resume: null,
-    portfolio: '',
-    github: '',
-    linkedin: '',
-    education: '',
-    certifications: '',
+    portfolio: "",
+    github: "",
+    linkedin: "",
+    education: "",
+    certifications: "",
     certificationFile: null,
-    languages: '',
+    languages: "",
   });
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
     setFormData((prevFormData) => {
-      if (type === 'file') {
-        return { ...prevFormData, [name]:"" }; // files[0] 
+      if (type === "file") {
+        return { ...prevFormData, [name]: "" }; // files[0]
       }
 
       return { ...prevFormData, [name]: value };
@@ -39,12 +39,12 @@ const TalentProfile = () => {
 
     try {
       // Make a POST request to the server endpoint
-      await axios.post('http://localhost:3000/submitTalent', formData);
+      await axios.post("http://localhost:3000/submitTalent", formData);
 
       // Optionally, you can handle success or redirect to another page
-      console.log('Talent profile submitted successfully');
+      console.log("Talent profile submitted successfully");
     } catch (error) {
-      console.error('Error submitting talent profile:', error);
+      console.error("Error submitting talent profile:", error);
     }
   };
 
@@ -53,7 +53,10 @@ const TalentProfile = () => {
       <div className="card bg-base-100 shadow-xl">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="card shrink-0 w-full max-w-xxl shadow-2xl bg-base-100">
-            <form className="card-body grid grid-cols-2" onSubmit={handleSubmit}>
+            <form
+              className="card-body grid grid-cols-2"
+              onSubmit={handleSubmit}
+            >
               {/* Left column */}
               <div>
                 <div className="form-control">
@@ -64,7 +67,7 @@ const TalentProfile = () => {
                       placeholder="Name"
                       className="input input-bordered"
                       name="name"
-                      required 
+                      required
                       value={formData.name}
                       onChange={handleChange}
                     />
@@ -78,7 +81,7 @@ const TalentProfile = () => {
                       placeholder="Fähigkeiten"
                       className="input input-bordered"
                       name="skills"
-                      required 
+                      required
                       value={formData.skills}
                       onChange={handleChange}
                     />
@@ -122,7 +125,7 @@ const TalentProfile = () => {
                           name="gender"
                           value="male"
                           className="radio radio-primary"
-                          checked={formData.gender === 'male'}
+                          checked={formData.gender === "male"}
                           onChange={handleChange}
                         />
                         <span className="ml-2">Männlich</span>
@@ -133,7 +136,7 @@ const TalentProfile = () => {
                           name="gender"
                           value="female"
                           className="radio radio-primary"
-                          checked={formData.gender === 'female'}
+                          checked={formData.gender === "female"}
                           onChange={handleChange}
                         />
                         <span className="ml-2">Weiblich</span>
@@ -144,7 +147,7 @@ const TalentProfile = () => {
                           name="gender"
                           value="diverse"
                           className="radio radio-primary"
-                          checked={formData.gender === 'diverse'}
+                          checked={formData.gender === "diverse"}
                           onChange={handleChange}
                         />
                         <span className="ml-2">Divers</span>
