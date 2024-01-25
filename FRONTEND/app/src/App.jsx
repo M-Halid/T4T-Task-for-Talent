@@ -10,6 +10,8 @@ import Signup from "./pages/Signup";
 import Page1 from "./pages/Page1";
 import Page2 from "./pages/Page2";
 import Page3 from "./pages/Page3";
+import TaskProfile from "./components/Profiles/TaskProfile.jsx";
+import UserHub from "./components/UserHub/UserHub";
 
 function App() {
   const { mode } = useContext(ModeContext);
@@ -27,6 +29,8 @@ function App() {
         <Route path="/page3" element={<Page3 />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/create-task" element={<TaskProfile />} />
+        <Route path="/UserHub" element={<UserHub />} />
       </Routes>
 
       <Footer />
