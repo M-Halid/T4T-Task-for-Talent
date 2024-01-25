@@ -10,6 +10,8 @@ import Signup from "./pages/Signup";
 import Page1 from "./pages/Page1";
 import Page2 from "./pages/Page2";
 import Page3 from "./pages/Page3";
+import User from "./pages/User";
+import UserDetail from "./components/User/UserDetail.jsx";
 
 function App() {
   const { mode } = useContext(ModeContext);
@@ -27,7 +29,7 @@ function App() {
         <Route path="/page3" element={<Page3 />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user/:id" element={<UserDetail />} />
       </Routes>
 
       <Footer />

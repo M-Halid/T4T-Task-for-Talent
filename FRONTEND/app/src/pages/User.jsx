@@ -1,10 +1,9 @@
-import { User } from "../../../../BACKEND/api/models/user.model";
-import SignUp from "../components/User/User"
+import UserDetail from "../components/User/UserDetail";
 
-const Signup = () => {
+const User = () => {
   return (
-    <User/>
+    <UserDetail/>
 );
 };
 
-export default Signup;
+export default User;

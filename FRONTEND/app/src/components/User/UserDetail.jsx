@@ -1,7 +1,6 @@
 import React from 'react';
-import TaskProfile from '../Profiles/TaskProfile';
-
-const User = () => {
+import TalentProfile from '../Profiles/TalentProfile';
+const UserDetail = () => {
     return (
         <div>
             <h1>User Profile</h1>
@@ -11,4 +10,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default UserDetail;
