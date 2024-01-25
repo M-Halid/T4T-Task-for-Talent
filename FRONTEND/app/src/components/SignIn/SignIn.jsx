@@ -41,7 +41,7 @@ const SignIn = () => {
       .then((user) => {
         if (user._id) {
           loadUser(user);
-          navigate("/");
+          navigate("/user");
         }
       })
       .catch((error) => {
