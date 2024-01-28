@@ -35,7 +35,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`navbar bg-base-100 relative ${mode === "dark" ? "dark" : ""}`}
+      className={`navbar bg-base-300 relative ${mode === "dark" ? "dark" : ""}`}
     >
       <div className="flex-none">
         <button
