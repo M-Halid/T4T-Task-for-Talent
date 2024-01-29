@@ -1,4 +1,4 @@
-      import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
 import {TalentProfileModel} from "../models/talent.model.js";
 import {TaskProfileModel} from "../models/task.model.js";
@@ -13,30 +13,43 @@ export const getUsers = async (req, res) => {
 };
 
 export const signin = async (req, res) => {
-  console.log(req.body); // Log the request body
-
-  const { email, password } = req.body;
+  const { email, password, id } = req.body;
 
   if (!email || !password) {
     return res.status(400).json("Bad Request: Missing email or password");
   }
 
   try {
-    const user = await User.findOne({ email });
+    const [user, talent] = await Promise.all([
+      User.findOne({ email }),
+      TalentProfileModel.findOne({ email }),
+    ]);
 
     if (user) {
       bcrypt.compare(password, user.password, function (err, result) {
         if (err) {
-          console.log(err); // Log any bcrypt errors
+          console.log(err);
           return res.status(500).json("Error comparing passwords");
         }
+
         if (result) {
-          res.json({
+          const userResponse = {
             _id: user._id,
             name: user.name,
             email: user.email,
             entries: user.entries,
             joined: user.joined,
+          };
+
+          const talentResponse = talent
+            ? {
+                talent,
+              }
+            : {};
+
+          res.json({
+            user: userResponse,
+            talent: talentResponse,
           });
         } else {
           res.status(400).json("Incorrect password");
@@ -46,7 +59,7 @@ export const signin = async (req, res) => {
       res.status(400).json("User not found");
     }
   } catch (error) {
-    console.log(error); // Log any other errors
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
