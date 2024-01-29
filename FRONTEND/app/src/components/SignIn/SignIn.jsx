@@ -13,20 +13,38 @@ const SignIn = () => {
     entries: 0,
     joined: "",
   });
+
   const navigate = useNavigate();
 
   const loadUser = (data) => {
+    const user = data.user
+    const talent = data.talent
     setUser({
-      id: data._id,
-      name: data.name,
-      email: data.email,
-      entries: data.entries,
-      joined: data.joined,
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      entries: user.entries,
+      joined: user.joined,
     });
+
     setIsLoggedIn({
-      id: data._id,
-      name: data.name,
-      email: data.email,
+      id: user._id,
+      name: user.name,
+      email: user.email, 
+      skills:  talent.skills,
+      workingFields: talent.workingFields,
+      age: talent.age,
+      gender: talent.age,
+      location: talent.location,
+      background: talent.background,
+      resume: null,
+      portfolio: talent.portfolio,
+      github:  talent.github,
+      linkedin: talent.linkedin,
+      education: talent.education,
+      certifications: talent.certifications,
+      certificationFile: null,
+      languages: talent.languages,
     });
   };
 
@@ -44,8 +62,9 @@ const SignIn = () => {
       }),
     })
       .then((response) => response.json())
-      .then((user) => {
-        if (user._id) {
+     .then((user) => {
+      console.log(user);
+        if (user.user._id) {
           loadUser(user);
           navigate("/UserHub");
         }

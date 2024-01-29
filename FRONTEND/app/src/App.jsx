@@ -20,7 +20,22 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState({
     id: "",
     name: "",
-    email: "",
+    email: "", 
+    skills:  "",
+    workingFields: "",
+    age: "",
+    gender: "",
+    location: "",
+    background: "",
+    resume: null,
+    portfolio: "",
+    github:  "",
+    linkedin: "",
+    education: "",
+    certifications: "",
+    certificationFile: null,
+    languages: "",
+    userId: "",
   });
 
   useEffect(() => {
@@ -30,7 +45,6 @@ function App() {
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
     <Router>
       <Nav />
-      <div className="h-16"><h1>Welcome User: {isLoggedIn.name} </h1></div>
       <Routes>
         <Route path="/" element={<HeroSection />} />
         <Route path="/page1" element={<Page1 />} />

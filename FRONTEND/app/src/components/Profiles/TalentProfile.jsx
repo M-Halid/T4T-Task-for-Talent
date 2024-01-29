@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from '../../App'; // Pfad zu Ihrer App-Komponente
+
 
 const TalentProfile = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: "",
     skills: "",
@@ -17,7 +20,7 @@ const TalentProfile = () => {
     education: "",
     certifications: "",
     certificationFile: null,
-    userId: '65a4f6a7694328b797e28095',
+    userId: "",
     languages: "",
   });
 
@@ -34,6 +37,7 @@ const TalentProfile = () => {
   };
 
   const handleSubmit = async (e) => {
+    formData.userId = isLoggedIn.id;
     e.preventDefault();
     console.log(formData);
     // Add client-side validation here if needed

@@ -4,7 +4,6 @@ import Menu from "./Menu";
 import Menu2 from "./Menu2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../App';
-import User from "../../pages/User";
 
 const Nav = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);

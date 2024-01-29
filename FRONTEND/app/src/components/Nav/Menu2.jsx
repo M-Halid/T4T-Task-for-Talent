@@ -14,6 +14,7 @@ const Menu2 = ({ items, setIsOpen }) => {
     setActiveItem(item.name);
     navigate(item.path);
     setIsOpen(false);
+    if (item.name === "Sign Out") window.location.reload();
   };
 
   useEffect(() => {
