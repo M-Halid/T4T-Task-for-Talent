@@ -72,7 +72,7 @@ const Input = ({
         ) : type === "textarea" ? (
           <textarea
             placeholder={placeholder}
-            className={`textarea textarea-bordered ${
+            className={`textarea textarea-bordered text-base ${
               name === "Beschreibungstext" ? "w-full" : "w-2/3"
             }`} // Conditionally apply w-full class
             name={name}
