@@ -20,7 +20,6 @@ const UserDetail = () => {
     education: "",
     certifications: "",
     certificationFile: null,
-    userId: "",
     languages: "",
   });
 
