@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from '../../App'; // Pfad zu Ihrer App-Komponente
-
+import Input from "./Inputs/Input";
+import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
 
 const TalentProfile = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
