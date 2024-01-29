@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../App';
 
 const SignIn = () => {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState({
@@ -20,6 +22,11 @@ const SignIn = () => {
       email: data.email,
       entries: data.entries,
       joined: data.joined,
+    });
+    setIsLoggedIn({
+      id: data._id,
+      name: data.name,
+      email: data.email,
     });
   };
 

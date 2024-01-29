@@ -19,6 +19,7 @@ const TalentProfile = () => {
     education: "",
     certifications: "",
     certificationFile: null,
+    userId: '65a4f6a7694328b797e28095',
     languages: "",
   });
 
