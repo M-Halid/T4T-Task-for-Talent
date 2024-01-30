@@ -1,5 +1,7 @@
 import { useState } from "react";
 import TagInput from "../Tags/TagInput";
+import { TagsContext } from "../../contexts/TagsContext";
+import { useContext } from "react";
 
 const UserHub = () => {
   // Feed selection
@@ -16,12 +18,11 @@ const UserHub = () => {
   const showFreelancersLabel = "Talents";
 
   // Tags
-  const [tags, setTags] = useState(["tag1", "tag2", "tag3", "tag4"]); // Initialize with your actual tags
-  const [selectedTags, setSelectedTags] = useState([]);
+
+  const { selectedTags, setSelectedTags } = useContext(TagsContext);
 
   const handleTagSelect = (tag) => {
-    setSelectedTags([...selectedTags, tag]);
-    // Here you would also filter your tasks and talents based on the selected tags
+    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
   };
 
   return (
@@ -40,7 +41,7 @@ const UserHub = () => {
           </label>
           <span className="text-secondary">{showFreelancersLabel}</span>
         </div>
-        <TagInput tags={tags} handleTagSelect={handleTagSelect} />
+        <TagInput handleTagSelect={handleTagSelect} />
       </div>
       <div className="w-8/10 mx-auto p-6 bg-base-200 rounded-xl shadow-md mt-6">
         {showTasks ? <TaskFeed /> : <FreelancerFeed />}

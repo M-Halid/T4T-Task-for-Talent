@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import proptypes from "prop-types";
+import { TagsContext } from "../../contexts/TagsContext";
 
-const TagInput = ({ tags, handleTagSelect }) => {
+const TagInput = ({ handleTagSelect }) => {
+  const { tags, selectedTags, setSelectedTags } = useContext(TagsContext);
   const [inputValue, setInputValue] = useState("");
 
   const matchingTags = tags.filter((tag) =>
     tag.toLowerCase().includes(inputValue.toLowerCase())
   );
+
+  const handleTagClick = (tag) => {
+    // Add the clicked tag to the selected tags
+    setSelectedTags([...selectedTags, tag]);
+    // Clear the input field
+    setInputValue("");
+  };
 
   return (
     <div>
@@ -15,16 +24,25 @@ const TagInput = ({ tags, handleTagSelect }) => {
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />
-      {matchingTags.map((tag, index) => (
-        <div key={index} onClick={() => handleTagSelect(tag)}>
-          {tag}
-        </div>
-      ))}
+      {inputValue &&
+        matchingTags.map((tag, index) => (
+          <div key={index} onClick={() => handleTagClick(tag)}>
+            {tag}
+          </div>
+        ))}
+      <div className="selected-tags-container">
+        {selectedTags.map((tag, index) => (
+          <button key={index} onClick={() => handleTagSelect(tag)}>
+            {tag}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
+
 TagInput.propTypes = {
-  tags: proptypes.arrayOf(proptypes.string),
   handleTagSelect: proptypes.func,
 };
+
 export default TagInput;
