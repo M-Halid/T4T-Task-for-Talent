@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const talentProfileSchema = new mongoose.Schema({
+  email: { type: String  },   //required: true, unique: true
   name: { type: String,  },
   skills: { type: String,  },
   workingFields: { type: String,  },

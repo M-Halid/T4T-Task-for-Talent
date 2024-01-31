@@ -17,20 +17,20 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const loadUser = (data) => {
-    const user = data.user
-    const talent = data.talent
+    const userInfo = data.user
+    const talent = data.talent.talent
     setUser({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      entries: user.entries,
-      joined: user.joined,
+      id: userInfo._id,
+      name: userInfo.name,
+      email: userInfo.email,
+      entries: userInfo.entries,
+      joined: userInfo.joined,
     });
 
     setIsLoggedIn({
-      id: user._id,
-      name: user.name,
-      email: user.email, 
+      id: userInfo._id,
+      name: userInfo.name,
+      email: userInfo.email, 
       skills:  talent.skills,
       workingFields: talent.workingFields,
       age: talent.age,
@@ -46,6 +46,8 @@ const SignIn = () => {
       certificationFile: null,
       languages: talent.languages,
     });
+    console.log(isLoggedIn);
+    console.log(talent);
   };
 
   const handleSignIn = (event) => {

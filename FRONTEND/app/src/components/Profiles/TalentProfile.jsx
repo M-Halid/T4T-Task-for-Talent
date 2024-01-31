@@ -46,9 +46,8 @@ const TalentProfile = () => {
   };
 
   const handleSubmit = async (e) => {
-    formData.userId = isLoggedIn.id;
+    formData.email = isLoggedIn.email;
     e.preventDefault();
-    console.log(formData);
     // Add client-side validation here if needed
 
     try {

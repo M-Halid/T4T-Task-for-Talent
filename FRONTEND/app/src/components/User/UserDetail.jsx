@@ -36,7 +36,6 @@ const UserDetail = () => {
   };
 
   const handleSubmit = async (e) => {
-    formData.userId = isLoggedIn.id;
     e.preventDefault();
     console.log(formData);
     // Add client-side validation here if needed
@@ -57,7 +56,7 @@ const UserDetail = () => {
         <div className="card bg-base-100 shadow-xl">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <div className="card shrink-0 w-full max-w-xxl shadow-2xl bg-base-100">
-              <h2>Hallo {isLoggedIn.name}! </h2>
+              <h2>Hallo {formData.skills}! </h2>
               <form
                 className="card-body grid grid-cols-2"
                 onSubmit={handleSubmit}

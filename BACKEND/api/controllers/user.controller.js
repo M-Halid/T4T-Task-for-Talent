@@ -88,7 +88,6 @@ export const updateProfileTalent = async (req, res) => {
     try {
       const talentProfile = new TalentProfileModel(req.body);
       await talentProfile.save();
-      console.log(talentProfile);
       res.status(201).json({ message: 'Talent profile submitted successfully!' });
     } catch (error) {
       console.error(error);
