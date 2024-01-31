@@ -3,10 +3,16 @@ import proptypes from "prop-types";
 import { TagsContext } from "../../contexts/TagsContext";
 
 const TagInput = ({ handleTagSelect }) => {
-  const { tags, selectedTags, setSelectedTags } = useContext(TagsContext);
+  const {
+    tags,
+    selectedTags,
+    setSelectedTags,
+    selectedCategory,
+    setSelectedCategory,
+  } = useContext(TagsContext);
   const [inputValue, setInputValue] = useState("");
 
-  const matchingTags = tags.filter((tag) =>
+  const matchingTags = tags[selectedCategory].filter((tag) =>
     tag.toLowerCase().includes(inputValue.toLowerCase())
   );
 
@@ -18,7 +24,20 @@ const TagInput = ({ handleTagSelect }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
+      <select
+        value={selectedCategory}
+        onChange={(e) => setSelectedCategory(e.target.value)}
+      >
+        {Object.keys(tags).map((category, index) => (
+          <option key={index} value={category}>
+            {category}
+          </option>
+        ))}
+      </select>
+      <div className="pb-4">
+        <h6>enter tags describing skills and technologies</h6>
+      </div>
       <input
         type="text"
         value={inputValue}

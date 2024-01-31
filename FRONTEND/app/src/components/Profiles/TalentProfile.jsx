@@ -1,12 +1,14 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from '../../App'; // Pfad zu Ihrer App-Komponente
+import { AuthContext } from "../../App";
+import TagInput from "../Tags/TagInput";
+import { TagsContext } from "../../contexts/TagsContext";
 import Input from "./Inputs/Input";
 import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
 
-
 const TalentProfile = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     name: "",
     skills: "",
@@ -43,6 +45,12 @@ const TalentProfile = () => {
 
       return { ...prevFormData, [name]: value };
     });
+  };
+
+  const { selectedTags, setSelectedTags } = useContext(TagsContext);
+
+  const handleTagSelect = (tag) => {
+    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
   };
 
   const handleSubmit = async (e) => {
@@ -237,6 +245,9 @@ const TalentProfile = () => {
                 value={formData.Beschreibungstext}
                 handleChange={handleChange}
               />
+
+              <TagInput handleTagSelect={handleTagSelect} />
+
               {/* Submit button */}
               <div className="form-control col-span-2 mt-6">
                 <input type="submit" value="Einreichen" className="btn" />

@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../App"; // Path to your App component
 import Input from "./Inputs/Input";
+import TagInput from "../Tags/TagInput";
+import { TagsContext } from "../../contexts/TagsContext";
 
 const TaskProfile = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -21,6 +23,12 @@ const TaskProfile = () => {
     setFormData((prevFormData) => {
       return { ...prevFormData, [name]: value };
     });
+  };
+
+  const { selectedTags, setSelectedTags } = useContext(TagsContext);
+
+  const handleTagSelect = (tag) => {
+    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
   };
 
   const handleSubmit = async (e) => {
@@ -118,6 +126,7 @@ const TaskProfile = () => {
                   />
                 </div>
               </div>
+              <TagInput handleTagSelect={handleTagSelect} />
               {/* Submit button */}
               <div className="form-control col-span-2 mt-6">
                 <input type="submit" value="Submit" className="btn" />
