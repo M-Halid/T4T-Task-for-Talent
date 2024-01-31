@@ -1,26 +1,23 @@
-import proptypes from "prop-types";
-import TagsContext from "../../contexts/TagsContext";
-import TagInput from "./TagInput";
-import { useContext } from "react";
+// import proptypes from "prop-types";
+// import TagsContext from "../../contexts/TagsContext";
+// import TagInput from "./TagInput";
+// import { useContext } from "react";
 
-const Tags = ({ handleTagClick }) => {
-  const { tags, tagOptions } = useContext(TagsContext);
+// const Tags = () => {
+//   const { selectedTags } = useContext(TagsContext);
 
-  console.log(tagOptions);
-  return (
-    <div>
-      <TagInput tags={tagOptions} handleTagSelect={handleTagClick} />
-      {tags.map((tag, index) => (
-        <button key={index} onClick={() => handleTagClick(tag)}>
-          {tag}
-        </button>
-      ))}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <TagInput />
+//       {selectedTags.map((tag, index) => (
+//         <button key={index}>{tag}</button>
+//       ))}
+//     </div>
+//   );
+// };
 
-Tags.propTypes = {
-  handleTagClick: proptypes.func,
-};
+// Tags.propTypes = {
+//   handleTagClick: proptypes.func,
+// };
 
-export default Tags;
+// export default Tags;
