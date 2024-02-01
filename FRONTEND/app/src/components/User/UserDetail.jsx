@@ -1,28 +1,39 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from '../../App'; // Pfad zu Ihrer App-Komponente
+import Input from "../Profiles/Inputs/Input"
+import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
+
 
 
 const UserDetail = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const [isEditing, setIsEditing] = useState(true);
+  
   const [formData, setFormData] = useState({
     name: isLoggedIn.name, //required
     skills: isLoggedIn.skills,            //required
     workingFields: isLoggedIn.workingFields,     //required
-    age: "",
-    gender: null,
-    location: "",
-    background: "",
-    resume: null,
-    portfolio: "",
-    github: "",
+    age: isLoggedIn.age,              //required
+    gender: isLoggedIn.gender,
+    location: isLoggedIn.location,
+    background: isLoggedIn.background,
+    resume: isLoggedIn.resume,
+    portfolio: isLoggedIn.portfolio,
+    github: isLoggedIn.github,
     linkedin: "",
     education: "",
     certifications: "",
     certificationFile: null,
     languages: "",
   });
+  // This state will hold the selected profilePicture file
+  const [profilePicture, setProfilePicture] = useState(null);
 
+  // This function will be called when the user selects a profilePicture file
+  const handleImageUpload = (e) => {
+    setProfilePicture(URL.createObjectURL(e.target.files[0]));
+  };
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
 
@@ -51,74 +62,69 @@ const UserDetail = () => {
     }
   };
 
-    return (
-        <div className="flex justify-center items-center min-h-screen bg-base-100">
-        <div className="card bg-base-100 shadow-xl">
-          <div className="hero-content flex-col lg:flex-row-reverse">
-            <div className="card shrink-0 w-full max-w-xxl shadow-2xl bg-base-100">
-              <h2>Hallo {formData.skills}! </h2>
-              <form
-                className="card-body grid grid-cols-2"
-                onSubmit={handleSubmit}
-              >
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-base-100">
+      <div className="card bg-base-100 shadow-xl">
+        <div className="flex-col lg:flex-row-reverse">
+          <div className="card shrink-0 w-full max-w-xxl shadow-2xl bg-base-100">
+            <form className="card-body text-base" onSubmit={handleSubmit}>
+              <div className="flex justify-center">
+                <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md">
+                  <img
+                    src={profilePicture || profilePlaceholder}
+                    alt="Profile"
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                  />
+                  <input
+                    type="file"
+                    onChange={handleImageUpload}
+                    className="w-full h-full absolute top-0 left-0 opacity-0 cursor-pointer"
+                    readOnly={isEditing}
+                 />
+                </div>
+               
+              </div>
+              <button type="button" onClick={() => setIsEditing(!isEditing) }>Edit Profile</button>
+         
+              <div className="grid grid-cols-2 gap-x-10">
                 {/* Left column */}
                 <div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Name</span>
-                      <input
-                        type="text"
-                        placeholder="Name"
-                        className="input input-bordered"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Fähigkeiten</span>
-                      <input
-                        type="text"
-                        placeholder="Fähigkeiten"
-                        className="input input-bordered"
-                        name="skills"
-                        required
-                        value={formData.skills}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Arbeitsfelder</span>
-                      <input
-                        type="text"
-                        placeholder="Arbeitsfelder"
-                        className="input input-bordered"
-                        name="workingFields"
-                        required
-                        value={formData.workingFields}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Alter</span>
-                      <input
-                        type="number"
-                        placeholder="Alter"
-                        className="input input-bordered"
-                        name="age"
-                        value={formData.age}
-                        onChange={handleChange}
-                        min="18"
-                      />
-                    </label>
-                  </div>
+                  <Input
+                    labelText="Name"
+                    placeholder="Name"
+                    name="name"
+                    value={formData.name}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                    />
+                  <Input
+                    
+                    labelText="Fähigkeiten"
+                    placeholder="Fähigkeiten"
+                    name="skills"
+                    value={formData.skills}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
+                  <Input
+                    labelText="Arbeitsfelder"
+                    placeholder="Arbeitsfelder"
+                    name="workingFields"
+                    value={formData.workingFields}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+                  <Input
+                    labelText="Alter"
+                    placeholder="Alter"
+                    name="age"
+                    type="number"
+                    min="18"
+                    value={formData.age}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
                   <div className="form-control">
                     <label className="label">
                       <span className="label-text">Geschlecht</span>
@@ -128,171 +134,142 @@ const UserDetail = () => {
                             type="radio"
                             name="gender"
                             value="male"
-                            className="radio radio-primary"
-                            checked={formData.gender === "male"}
+                            className="radio radio-primary transform scale-75"
+                            checked={formData.gender ==="male"}
                             onChange={handleChange}
+                            //disabled
                           />
-                          <span className="ml-2">Männlich</span>
+                          <span className="ml-2 text-sm">Männlich</span>
                         </label>
                         <label>
                           <input
                             type="radio"
                             name="gender"
                             value="female"
-                            className="radio radio-primary"
+                            className="radio radio-primary transform scale-75"
                             checked={formData.gender === "female"}
                             onChange={handleChange}
-                          />
-                          <span className="ml-2">Weiblich</span>
-                        </label>
-                        <label>
-                          <input
-                            type="radio"
-                            name="gender"
-                            value="diverse"
-                            className="radio radio-primary"
-                            checked={formData.gender === "diverse"}
-                            onChange={handleChange}
-                          />
-                          <span className="ml-2">Divers</span>
+                            //disabled
+                         />
+                          <span className="ml-2 text-sm">Weiblich</span>
                         </label>
                       </div>
                     </label>
                   </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Ort/Stadt</span>
-                      <input
-                        type="text"
-                        placeholder="Ort/Stadt"
-                        className="input input-bordered"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Hintergrund</span>
-                      <textarea
-                        placeholder="Hintergrund"
-                        className="textarea textarea-bordered"
-                        name="background"
-                        value={formData.background}
-                        onChange={handleChange}
-                      ></textarea>
-                    </label>
-                  </div>
+                  <Input
+                    labelText="Ort/Stadt"
+                    placeholder="Ort/Stadt"
+                    name="location"
+                    value={formData.location}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+                  <Input
+                    labelText="Languages"
+                    placeholder="Languages"
+                    name="languages"
+                    value={formData.languages}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+                  <Input
+                    labelText="Hintergrund"
+                    placeholder="Hintergrund"
+                    name="background"
+                    type="textarea"
+                    value={formData.background}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
                   {/* Add other form fields for the left column here */}
                 </div>
                 {/* Right column */}
                 <div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Resume/CV</span>
-                      <input
-                        type="file"
-                        className="input input-bordered"
-                        name="resume"
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Portfolio</span>
-                      <input
-                        type="text"
-                        placeholder="Portfolio URL"
-                        className="input input-bordered"
-                        name="portfolio"
-                        value={formData.portfolio}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">GitHub</span>
-                      <input
-                        type="text"
-                        placeholder="GitHub Profile URL"
-                        className="input input-bordered"
-                        name="github"
-                        value={formData.github}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">LinkedIn</span>
-                      <input
-                        type="text"
-                        placeholder="LinkedIn Profile URL"
-                        className="input input-bordered"
-                        name="linkedin"
-                        value={formData.linkedin}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Education</span>
-                      <textarea
-                        placeholder="Education"
-                        className="textarea textarea-bordered w-full"
-                        name="education"
-                        value={formData.education}
-                        onChange={handleChange}
-                      ></textarea>
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Certifications</span>
-                      <textarea
-                        placeholder="Certifications"
-                        className="textarea textarea-bordered w-full"
-                        name="certifications"
-                        value={formData.certifications}
-                        onChange={handleChange}
-                      ></textarea>
-                      <input
-                        type="file"
-                        className="input input-bordered"
-                        name="certificationFile"
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Languages</span>
-                      <input
-                        type="text"
-                        placeholder="Languages"
-                        className="input input-bordered"
-                        name="languages"
-                        value={formData.languages}
-                        onChange={handleChange}
-                      />
-                    </label>
-                  </div>
+                  <Input
+                    labelText="Resume/CV"
+                    name="resume"
+                    type="file"
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
+                  <Input
+                    labelText="Portfolio"
+                    placeholder="Portfolio URL"
+                    name="portfolio"
+                    value={formData.portfolio}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
+                  <Input
+                    labelText="GitHub"
+                    placeholder="GitHub Profile URL"
+                    name="github"
+                    value={formData.github}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
+                  <Input
+                    labelText="LinkedIn"
+                    placeholder="LinkedIn Profile URL"
+                    name="linkedin"
+                    value={formData.linkedin}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
+                  <Input
+                    labelText="Education"
+                    placeholder="Education"
+                    name="education"
+                    type="textarea"
+                    value={formData.education}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
+                  <Input
+                    labelText="Certifications"
+                    placeholder="Certifications"
+                    name="certifications"
+                    type="textarea"
+                    value={formData.certifications}
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
+                  <Input
+                    labelText="Certifications"
+                    name="certificationFile"
+                    type="file"
+                    handleChange={handleChange}
+                    readOnly={isEditing}
+                  />
+
                   {/* Add other form fields for the right column here */}
                 </div>
-                {/* Submit button */}
-                <div className="form-control col-span-2 mt-6">
-                  <input type="submit" value="Einreichen" className="btn" />
-                </div>
-              </form>
-            </div>
+              </div>
+              <Input
+                labelText="Beschreibungstext"
+                placeholder="beschreibe dich"
+                name="Beschreibungstext"
+                type="textarea"
+                value={formData.Beschreibungstext}
+                handleChange={handleChange}
+                    readOnly={isEditing}
+              />
+              {/* Submit button */}
+              <div className="form-control col-span-2 mt-6">
+                <input type="submit" value="Einreichen" className="btn" />
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    );
-  };
-  
+    </div>
+  );
+};
+
 export default UserDetail;
