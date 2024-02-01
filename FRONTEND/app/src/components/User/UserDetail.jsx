@@ -46,28 +46,44 @@ const UserDetail = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // Add client-side validation here if needed
-
-    try {
-      // Make a POST request to the server endpoint
-      await axios.post("http://localhost:3000/submitTalent", formData);
-
-      // Optionally, you can handle success or redirect to another page
-      console.log("Talent profile submitted successfully");
-    } catch (error) {
-      console.error("Error submitting talent profile:", error);
-    }
-  };
-
+  const updateTalent = (event) => {
+    event.preventDefault();
+  
+    fetch("http://localhost:3000/updateTalent", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: isLoggedIn.email,
+        updatedProfile: formData,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+        //setIsEditing(!isEditing);
+        // Handle success, update UI, show messages, etc.
+      })
+      .catch((error) => {
+        console.error("Error updating talent profile:", error.message);
+        // Handle error, show error messages, etc.
+      });
+  
+      setIsEditing(!isEditing);
+    };
+  
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100">
       <div className="card bg-base-100 shadow-xl">
         <div className="flex-col lg:flex-row-reverse">
           <div className="card shrink-0 w-full max-w-xxl shadow-2xl bg-base-100">
-            <form className="card-body text-base" onSubmit={handleSubmit}>
+            <form className="card-body text-base" onSubmit={updateTalent}>
               <div className="flex justify-center">
                 <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md">
                   <img
@@ -137,6 +153,7 @@ const UserDetail = () => {
                             className="radio radio-primary transform scale-75"
                             checked={formData.gender ==="male"}
                             onChange={handleChange}
+                            disabled = {isEditing}
                             //disabled
                           />
                           <span className="ml-2 text-sm">Männlich</span>
@@ -149,7 +166,7 @@ const UserDetail = () => {
                             className="radio radio-primary transform scale-75"
                             checked={formData.gender === "female"}
                             onChange={handleChange}
-                            //disabled
+                            disabled = {isEditing}
                          />
                           <span className="ml-2 text-sm">Weiblich</span>
                         </label>
@@ -261,9 +278,9 @@ const UserDetail = () => {
                     readOnly={isEditing}
               />
               {/* Submit button */}
-              <div className="form-control col-span-2 mt-6">
-                <input type="submit" value="Einreichen" className="btn" />
-              </div>
+              { !isEditing ?  <div className="form-control col-span-2 mt-6">
+                <input type="submit" value="SPEICHERN" className="btn" />
+              </div> : null}
             </form>
           </div>
         </div>

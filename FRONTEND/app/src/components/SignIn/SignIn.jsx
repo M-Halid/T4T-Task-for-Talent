@@ -18,7 +18,7 @@ const SignIn = () => {
 
   const loadUser = (data) => {
     const userInfo = data.user
-    const talent = data.talent.talent
+  
     setUser({
       id: userInfo._id,
       name: userInfo.name,
@@ -26,8 +26,15 @@ const SignIn = () => {
       entries: userInfo.entries,
       joined: userInfo.joined,
     });
-
     setIsLoggedIn({
+      id: userInfo._id,
+      name: userInfo.name,
+      email: userInfo.email,});
+       
+      if(data.talent.talent) {
+      const talent = data.talent.talent
+   
+      setIsLoggedIn({
       id: userInfo._id,
       name: userInfo.name,
       email: userInfo.email, 
@@ -45,7 +52,7 @@ const SignIn = () => {
       certifications: talent.certifications,
       certificationFile: null,
       languages: talent.languages,
-    });
+    });}
    };
 
   const handleSignIn = (event) => {
