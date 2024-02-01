@@ -34,7 +34,7 @@ const SignIn = () => {
       skills:  talent.skills,
       workingFields: talent.workingFields,
       age: talent.age,
-      gender: talent.age,
+      gender: talent.gender,
       location: talent.location,
       background: talent.background,
       resume: null,
@@ -46,9 +46,7 @@ const SignIn = () => {
       certificationFile: null,
       languages: talent.languages,
     });
-    console.log(isLoggedIn);
-    console.log(talent);
-  };
+   };
 
   const handleSignIn = (event) => {
     event.preventDefault();

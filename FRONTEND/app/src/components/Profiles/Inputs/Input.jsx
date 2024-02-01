@@ -8,6 +8,7 @@ const Input = ({
   value,
   handleChange,
   type = "text",
+  readOnly
 }) => {
   // State to hold the preview URL of the uploaded file
   const [preview, setPreview] = useState(null);
@@ -50,6 +51,7 @@ const Input = ({
                 name={name}
                 className="hidden"
                 onChange={handleFileChange} // Use the handleFileChange function for file inputs
+                readOnly= {readOnly}
               />
             </label>
             {preview && (
@@ -60,6 +62,7 @@ const Input = ({
                 width="100%"
                 height="200px"
                 className="mt-2"
+                readOnly= {readOnly}
               >
                 <p>
                   It appears you don`&apos`t have a PDF plugin for this browser.
@@ -78,6 +81,7 @@ const Input = ({
             name={name}
             value={value}
             onChange={handleChange}
+            readOnly= {readOnly}
           ></textarea>
         ) : (
           <input
@@ -87,6 +91,7 @@ const Input = ({
             name={name}
             value={value}
             onChange={handleChange}
+            readOnly= {readOnly}
           />
         )}
       </label>
