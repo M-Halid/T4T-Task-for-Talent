@@ -9,6 +9,7 @@ import Signup from "./pages/Signup";
 import Page1 from "./pages/Page1";
 import Page2 from "./pages/Page2";
 import Page3 from "./pages/Page3";
+import Page4 from "./pages/Page4";
 import TaskProfile from "./components/Profiles/TaskProfile.jsx";
 import UserHub from "./components/UserHub/UserHub";
 import User from "./pages/User";
@@ -51,6 +52,7 @@ function App() {
             <Route path="/page1" element={<Page1 />} />
             <Route path="/page2" element={<Page2 />} />
             <Route path="/page3" element={<Page3 />} />
+            <Route path="/page4" element={<Page4 />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/create-task" element={<TaskProfile />} />

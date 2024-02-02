@@ -3,7 +3,7 @@ import { ModeContext } from "../../contexts/ThemeContext";
 import Menu from "./Menu";
 import Menu2 from "./Menu2";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../../App';
+import { AuthContext } from "../../App";
 
 const Nav = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -17,6 +17,7 @@ const Nav = () => {
     { name: "Item 1", path: "/page1" },
     { name: "Item 2", path: "/page2" },
     { name: "Item 3", path: "/page3" },
+    { name: "Item 4", path: "/page4" },
   ];
   const menu2ItemsToSign = [
     { name: "Signin", path: "/signin" },
@@ -126,7 +127,12 @@ const Nav = () => {
           </svg>
         </button>
         {isOpen && <Menu items={menu1Items} setIsOpen={setIsOpen} />}
-        {isOpen2 && <Menu2 items={!isLoggedIn.name ? menu2ItemsToSign : menu2ItemsToUser } setIsOpen={setIsOpen2} />}
+        {isOpen2 && (
+          <Menu2
+            items={!isLoggedIn.name ? menu2ItemsToSign : menu2ItemsToUser}
+            setIsOpen={setIsOpen2}
+          />
+        )}
       </div>
     </div>
   );
