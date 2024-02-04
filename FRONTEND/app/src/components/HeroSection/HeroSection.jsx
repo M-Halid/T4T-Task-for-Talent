@@ -1,4 +1,5 @@
 import videoAsset from "../../assets/videos/video.mp4";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
@@ -22,7 +23,9 @@ const HeroSection = () => {
             Werde Teil der Community und finde deinen nächsten Auftrag oder dein
             nächstes Talent.
           </p>
-          <button className="btn btn-primary">Get Started</button>
+          <Link to="/GetStarted">
+            <button className="btn btn-primary">Get Started</button>
+          </Link>
         </div>
       </div>
     </div>

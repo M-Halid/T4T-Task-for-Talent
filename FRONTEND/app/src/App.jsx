@@ -12,6 +12,7 @@ import Page3 from "./pages/Page3";
 import Page4 from "./pages/Page4";
 import TaskProfile from "./components/Profiles/TaskProfile.jsx";
 import UserHub from "./components/UserHub/UserHub";
+import GetStarted from "./components/GetStarted/GetStarted.jsx";
 import User from "./pages/User";
 import { TagsProvider } from "./contexts/TagsContext.jsx";
 export const AuthContext = createContext();
@@ -46,20 +47,25 @@ function App() {
     <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
       <TagsProvider>
         <Router>
-          <Nav />
-          <Routes>
-            <Route path="/" element={<HeroSection />} />
-            <Route path="/page1" element={<Page1 />} />
-            <Route path="/page2" element={<Page2 />} />
-            <Route path="/page3" element={<Page3 />} />
-            <Route path="/page4" element={<Page4 />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/create-task" element={<TaskProfile />} />
-            <Route path="/UserHub" element={<UserHub />} />
-            <Route path="/User" element={<User />} />
-          </Routes>
-          <Footer />
+          <div className="flex flex-col min-h-screen">
+            <Nav />
+            <div className="flex-grow">
+              <Routes>
+                <Route path="/" element={<HeroSection />} />
+                <Route path="/GetStarted" element={<GetStarted />} />
+                <Route path="/page1" element={<Page1 />} />
+                <Route path="/page2" element={<Page2 />} />
+                <Route path="/page3" element={<Page3 />} />
+                <Route path="/page4" element={<Page4 />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/create-task" element={<TaskProfile />} />
+                <Route path="/UserHub" element={<UserHub />} />
+                <Route path="/User" element={<User />} />
+              </Routes>
+            </div>
+            <Footer />
+          </div>
         </Router>
       </TagsProvider>
     </AuthContext.Provider>
