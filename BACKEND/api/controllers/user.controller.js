@@ -83,7 +83,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const updateProfileTalent = async (req, res) => {
+export const newProfileTalent = async (req, res) => {
   // Handle form submission
     try {
       const talentProfile = new TalentProfileModel(req.body);
@@ -95,7 +95,7 @@ export const updateProfileTalent = async (req, res) => {
     }
 };
 
-export const updateProfileTask = async (req, res) => {
+export const newProfileTask = async (req, res) => {
   // Handle form submission
     try {
       const taskProfile = new TaskProfileModel(req.body);
@@ -107,6 +107,28 @@ export const updateProfileTask = async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
     }
 };
+export const updateTalent = async (req, res) => {
+  const { email, updatedProfile } = req.body;
+  console.log("email:", email, "updatedProfile:", updatedProfile);
+ try {
+      // Assuming you have some database connection and models set up
+      const existingTalent = await TalentProfileModel.findOne({ email });
+
+      if (!existingTalent) {
+          throw new Error('Talent profile not found');
+      }
+
+      // Update the talent profile with the new data
+      existingTalent.set(updatedProfile);
+      await existingTalent.save();
+
+      return { message: 'Talent profile updated successfully' };
+  } catch (error) {
+      console.error('Error updating talent profile:', error);
+      
+  }
+};
+
 
 export const getProfile = async (req, res) => {
   const { id } = req.params;

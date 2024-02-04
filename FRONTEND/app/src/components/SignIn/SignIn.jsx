@@ -17,8 +17,10 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const loadUser = (data) => {
+
     const userInfo = data.user;
     const talent = data.talent.talent;
+
     setUser({
       id: userInfo._id,
       name: userInfo.name,
@@ -26,15 +28,24 @@ const SignIn = () => {
       entries: userInfo.entries,
       joined: userInfo.joined,
     });
-
     setIsLoggedIn({
       id: userInfo._id,
       name: userInfo.name,
-      email: userInfo.email,
-      skills: talent.skills,
+
+      email: userInfo.email,});
+       
+      if(data.talent.talent) {
+      const talent = data.talent.talent
+   
+      setIsLoggedIn({
+      id: userInfo._id,
+      name: userInfo.name,
+      email: userInfo.email, 
+      skills:  talent.skills,
+
       workingFields: talent.workingFields,
       age: talent.age,
-      gender: talent.age,
+      gender: talent.gender,
       location: talent.location,
       background: talent.background,
       resume: null,
@@ -45,10 +56,8 @@ const SignIn = () => {
       certifications: talent.certifications,
       certificationFile: null,
       languages: talent.languages,
-    });
-    console.log(isLoggedIn);
-    console.log(talent);
-  };
+    });}
+   };
 
   const handleSignIn = (event) => {
     event.preventDefault();
