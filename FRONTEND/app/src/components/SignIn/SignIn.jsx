@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../../App';
+import { AuthContext } from "../../App";
 
 const SignIn = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -17,8 +17,8 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const loadUser = (data) => {
-    const userInfo = data.user
-    const talent = data.talent.talent
+    const userInfo = data.user;
+    const talent = data.talent.talent;
     setUser({
       id: userInfo._id,
       name: userInfo.name,
@@ -30,8 +30,8 @@ const SignIn = () => {
     setIsLoggedIn({
       id: userInfo._id,
       name: userInfo.name,
-      email: userInfo.email, 
-      skills:  talent.skills,
+      email: userInfo.email,
+      skills: talent.skills,
       workingFields: talent.workingFields,
       age: talent.age,
       gender: talent.age,
@@ -39,7 +39,7 @@ const SignIn = () => {
       background: talent.background,
       resume: null,
       portfolio: talent.portfolio,
-      github:  talent.github,
+      github: talent.github,
       linkedin: talent.linkedin,
       education: talent.education,
       certifications: talent.certifications,
@@ -64,8 +64,8 @@ const SignIn = () => {
       }),
     })
       .then((response) => response.json())
-     .then((user) => {
-      console.log(user);
+      .then((user) => {
+        console.log(user);
         if (user.user._id) {
           loadUser(user);
           navigate("/UserHub");
@@ -85,46 +85,44 @@ const SignIn = () => {
   };
 
   return (
-    <div className="card bg-base-100 shadow-xl ">
-      <div className="hero-content flex-col lg:flex-row-reverse ">
-        <div className="card shrink-0 w-full max-w-md  shadow-2xl bg-base-100">
-          <form className="card-body" onSubmit={handleSignIn}>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="email"
-                className="input input-bordered"
-                required
-                onChange={handleEmailChange}
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="password"
-                className="input input-bordered"
-                required
-                onChange={handlePasswordChange}
-              />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
-            </div>
-            <div className="form-control mt-6">
-              <button className="btn btn-primary" type="submit">
-                Sign In
-              </button>
-            </div>
-          </form>
-        </div>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="card bg-base-300 shadow-md flex-col shrink-0 w-full max-w-md">
+        <form className="card-body" onSubmit={handleSignIn}>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
+              placeholder="email"
+              className="input input-bordered"
+              required
+              onChange={handleEmailChange}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="password"
+              className="input input-bordered"
+              required
+              onChange={handlePasswordChange}
+            />
+            <label className="label">
+              <a href="#" className="label-text-alt link link-hover">
+                Forgot password?
+              </a>
+            </label>
+          </div>
+          <div className="form-control mt-6">
+            <button className="btn btn-primary" type="submit">
+              Sign In
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

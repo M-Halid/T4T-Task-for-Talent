@@ -71,189 +71,187 @@ const TalentProfile = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100">
-      <div className="card bg-base-100 shadow-xl">
-        <div className="flex-col lg:flex-row-reverse">
-          <div className="card shrink-0 w-full max-w-xxl shadow-2xl bg-base-100">
-            <form className="card-body text-base" onSubmit={handleSubmit}>
-              <div className="flex justify-center">
-                <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md">
-                  <img
-                    src={profilePicture || profilePlaceholder}
-                    alt="Profile"
-                    className="absolute top-0 left-0 w-full h-full object-cover"
-                  />
-                  <input
-                    type="file"
-                    onChange={handleImageUpload}
-                    className="w-full h-full absolute top-0 left-0 opacity-0 cursor-pointer"
-                  />
-                </div>
+      <div className="flex-col lg:flex-row-reverse">
+        <div className="card shrink-0 w-full max-w-xxl shadow-md bg-base-300 mt-3 mb-10">
+          <form className="card-body text-base" onSubmit={handleSubmit}>
+            <div className="flex justify-center">
+              <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md">
+                <img
+                  src={profilePicture || profilePlaceholder}
+                  alt="Profile"
+                  className="absolute top-0 left-0 w-full h-full object-cover"
+                />
+                <input
+                  type="file"
+                  onChange={handleImageUpload}
+                  className="w-full h-full absolute top-0 left-0 opacity-0 cursor-pointer"
+                />
               </div>
-              <div className="grid grid-cols-2 gap-x-10">
-                {/* Left column */}
-                <div>
-                  <Input
-                    labelText="Name"
-                    placeholder="Name"
-                    name="name"
-                    value={formData.name}
-                    handleChange={handleChange}
-                  />
-                  <Input
-                    labelText="Fähigkeiten"
-                    placeholder="Fähigkeiten"
-                    name="skills"
-                    value={formData.skills}
-                    handleChange={handleChange}
-                  />
+            </div>
+            <div className="grid grid-cols-2 gap-x-10">
+              {/* Left column */}
+              <div>
+                <Input
+                  labelText="Name"
+                  placeholder="Name"
+                  name="name"
+                  value={formData.name}
+                  handleChange={handleChange}
+                />
+                <Input
+                  labelText="Fähigkeiten"
+                  placeholder="Fähigkeiten"
+                  name="skills"
+                  value={formData.skills}
+                  handleChange={handleChange}
+                />
 
-                  <Input
-                    labelText="Arbeitsfelder"
-                    placeholder="Arbeitsfelder"
-                    name="workingFields"
-                    value={formData.workingFields}
-                    handleChange={handleChange}
-                  />
-                  <Input
-                    labelText="Alter"
-                    placeholder="Alter"
-                    name="age"
-                    type="number"
-                    min="18"
-                    value={formData.age}
-                    handleChange={handleChange}
-                  />
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Geschlecht</span>
-                      <div className="space-x-2">
-                        <label>
-                          <input
-                            type="radio"
-                            name="gender"
-                            value="male"
-                            className="radio radio-primary transform scale-75"
-                            checked={formData.gender === "male"}
-                            onChange={handleChange}
-                          />
-                          <span className="ml-2 text-sm">Männlich</span>
-                        </label>
-                        <label>
-                          <input
-                            type="radio"
-                            name="gender"
-                            value="female"
-                            className="radio radio-primary transform scale-75"
-                            checked={formData.gender === "female"}
-                            onChange={handleChange}
-                          />
-                          <span className="ml-2 text-sm">Weiblich</span>
-                        </label>
-                      </div>
-                    </label>
-                  </div>
-                  <Input
-                    labelText="Ort/Stadt"
-                    placeholder="Ort/Stadt"
-                    name="location"
-                    value={formData.location}
-                    handleChange={handleChange}
-                  />
-                  <Input
-                    labelText="Languages"
-                    placeholder="Languages"
-                    name="languages"
-                    value={formData.languages}
-                    handleChange={handleChange}
-                  />
-                  <Input
-                    labelText="Hintergrund"
-                    placeholder="Hintergrund"
-                    name="background"
-                    type="textarea"
-                    value={formData.background}
-                    handleChange={handleChange}
-                  />
-                  {/* Add other form fields for the left column here */}
+                <Input
+                  labelText="Arbeitsfelder"
+                  placeholder="Arbeitsfelder"
+                  name="workingFields"
+                  value={formData.workingFields}
+                  handleChange={handleChange}
+                />
+                <Input
+                  labelText="Alter"
+                  placeholder="Alter"
+                  name="age"
+                  type="number"
+                  min="18"
+                  value={formData.age}
+                  handleChange={handleChange}
+                />
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Geschlecht</span>
+                    <div className="space-x-2">
+                      <label>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="male"
+                          className="radio radio-primary transform scale-75"
+                          checked={formData.gender === "male"}
+                          onChange={handleChange}
+                        />
+                        <span className="ml-2 text-sm">Männlich</span>
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="gender"
+                          value="female"
+                          className="radio radio-primary transform scale-75"
+                          checked={formData.gender === "female"}
+                          onChange={handleChange}
+                        />
+                        <span className="ml-2 text-sm">Weiblich</span>
+                      </label>
+                    </div>
+                  </label>
                 </div>
-                {/* Right column */}
-                <div>
-                  <Input
-                    labelText="Resume/CV"
-                    name="resume"
-                    type="file"
-                    handleChange={handleChange}
-                  />
-
-                  <Input
-                    labelText="Portfolio"
-                    placeholder="Portfolio URL"
-                    name="portfolio"
-                    value={formData.portfolio}
-                    handleChange={handleChange}
-                  />
-
-                  <Input
-                    labelText="GitHub"
-                    placeholder="GitHub Profile URL"
-                    name="github"
-                    value={formData.github}
-                    handleChange={handleChange}
-                  />
-
-                  <Input
-                    labelText="LinkedIn"
-                    placeholder="LinkedIn Profile URL"
-                    name="linkedin"
-                    value={formData.linkedin}
-                    handleChange={handleChange}
-                  />
-
-                  <Input
-                    labelText="Education"
-                    placeholder="Education"
-                    name="education"
-                    type="textarea"
-                    value={formData.education}
-                    handleChange={handleChange}
-                  />
-
-                  <Input
-                    labelText="Certifications"
-                    placeholder="Certifications"
-                    name="certifications"
-                    type="textarea"
-                    value={formData.certifications}
-                    handleChange={handleChange}
-                  />
-
-                  <Input
-                    labelText="Certifications"
-                    name="certificationFile"
-                    type="file"
-                    handleChange={handleChange}
-                  />
-
-                  {/* Add other form fields for the right column here */}
-                </div>
+                <Input
+                  labelText="Ort/Stadt"
+                  placeholder="Ort/Stadt"
+                  name="location"
+                  value={formData.location}
+                  handleChange={handleChange}
+                />
+                <Input
+                  labelText="Languages"
+                  placeholder="Languages"
+                  name="languages"
+                  value={formData.languages}
+                  handleChange={handleChange}
+                />
+                <Input
+                  labelText="Hintergrund"
+                  placeholder="Hintergrund"
+                  name="background"
+                  type="textarea"
+                  value={formData.background}
+                  handleChange={handleChange}
+                />
+                {/* Add other form fields for the left column here */}
               </div>
-              <Input
-                labelText="Beschreibungstext"
-                placeholder="beschreibe dich"
-                name="Beschreibungstext"
-                type="textarea"
-                value={formData.Beschreibungstext}
-                handleChange={handleChange}
-              />
+              {/* Right column */}
+              <div>
+                <Input
+                  labelText="Resume/CV"
+                  name="resume"
+                  type="file"
+                  handleChange={handleChange}
+                />
 
-              <TagInput handleTagSelect={handleTagSelect} />
+                <Input
+                  labelText="Portfolio"
+                  placeholder="Portfolio URL"
+                  name="portfolio"
+                  value={formData.portfolio}
+                  handleChange={handleChange}
+                />
 
-              {/* Submit button */}
-              <div className="form-control col-span-2 mt-6">
-                <input type="submit" value="Einreichen" className="btn" />
+                <Input
+                  labelText="GitHub"
+                  placeholder="GitHub Profile URL"
+                  name="github"
+                  value={formData.github}
+                  handleChange={handleChange}
+                />
+
+                <Input
+                  labelText="LinkedIn"
+                  placeholder="LinkedIn Profile URL"
+                  name="linkedin"
+                  value={formData.linkedin}
+                  handleChange={handleChange}
+                />
+
+                <Input
+                  labelText="Education"
+                  placeholder="Education"
+                  name="education"
+                  type="textarea"
+                  value={formData.education}
+                  handleChange={handleChange}
+                />
+
+                <Input
+                  labelText="Certifications"
+                  placeholder="Certifications"
+                  name="certifications"
+                  type="textarea"
+                  value={formData.certifications}
+                  handleChange={handleChange}
+                />
+
+                <Input
+                  labelText="Certifications"
+                  name="certificationFile"
+                  type="file"
+                  handleChange={handleChange}
+                />
+
+                {/* Add other form fields for the right column here */}
               </div>
-            </form>
-          </div>
+            </div>
+            <Input
+              labelText="Beschreibungstext"
+              placeholder="beschreibe dich"
+              name="Beschreibungstext"
+              type="textarea"
+              value={formData.Beschreibungstext}
+              handleChange={handleChange}
+            />
+
+            <TagInput handleTagSelect={handleTagSelect} />
+
+            {/* Submit button */}
+            <div className="form-control col-span-2 mt-6">
+              <input type="submit" value="Einreichen" className="btn" />
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -26,24 +26,27 @@ const UserHub = () => {
   };
 
   return (
-    <div className="bg-base-100">
-      <div className="p-6 max-w-sm mx-auto bg-base-200 rounded-xl shadow-md flex flex-col items-center space-y-4">
-        <h2 className="text-primary mb-2">Choose your view</h2>
-        <div className="flex items-center justify-between w-full">
-          <span className="text-secondary">{showTasksLabel}</span>
-          <label className="switch switch-accent">
-            <input
-              type="checkbox"
-              onChange={handleToggle}
-              checked={!showTasks}
-              className="toggle"
-            />
-          </label>
-          <span className="text-secondary">{showFreelancersLabel}</span>
+    <div>
+      <div className="flex justify-center items-center pt-12 pb-12 bg-base-100">
+        <div className="p-6 max-w-sm bg-base-300 rounded-xl shadow-md flex flex-col items-center justify-center space-y-4">
+          <h2 className="text-primary mb-2">Choose your view</h2>
+          <div className="flex items-center justify-between w-full">
+            <span className="text-secondary">{showTasksLabel}</span>
+            <label className="switch switch-accent">
+              <input
+                type="checkbox"
+                onChange={handleToggle}
+                checked={!showTasks}
+                className="toggle"
+              />
+            </label>
+            <span className="text-secondary">{showFreelancersLabel}</span>
+          </div>
+          <TagInput handleTagSelect={handleTagSelect} />
         </div>
-        <TagInput handleTagSelect={handleTagSelect} />
       </div>
-      <div className="w-8/10 mx-auto p-6 bg-base-200 rounded-xl shadow-md mt-6">
+
+      <div className="w-8/10 mx-auto p-6 bg-base-200 rounded-xl shadow-md">
         {showTasks ? <TaskFeed /> : <FreelancerFeed />}
       </div>
     </div>
