@@ -38,65 +38,63 @@ const SignUp = () => {
   };
 
   return (
-    <div className="card bg-base-100 shadow-xl flex-col">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="card shrink-0 w-full max-w-md  shadow-2xl bg-base-100">
-          <form className="card-body" onSubmit={handleRegister}>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                type="text"
-                name="name"
-                placeholder="name"
-                className="input input-bordered"
-                required
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="email"
-                className="input input-bordered"
-                required
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="password"
-                className="input input-bordered"
-                required
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Confirm Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="confirm password"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control mt-6">
-              <button className="btn btn-primary" type="submit">
-                Sign Up
-              </button>
-            </div>
-          </form>
-        </div>
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="card bg-base-300 shadow-md flex-col shrink-0 w-full max-w-md">
+        <form className="card-body" onSubmit={handleRegister}>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Name</span>
+            </label>
+            <input
+              type="text"
+              name="name"
+              placeholder="name"
+              className="input input-bordered"
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
+              placeholder="email"
+              className="input input-bordered"
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="password"
+              className="input input-bordered"
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Confirm Password</span>
+            </label>
+            <input
+              type="password"
+              placeholder="confirm password"
+              className="input input-bordered"
+              required
+            />
+          </div>
+          <div className="form-control mt-6">
+            <button className="btn btn-primary" type="submit">
+              Sign Up
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
