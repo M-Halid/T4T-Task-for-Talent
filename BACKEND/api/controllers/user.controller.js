@@ -11,7 +11,6 @@ export const getUsers = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 export const signin = async (req, res) => {
   const { email, password, id } = req.body;
 
@@ -62,12 +61,19 @@ export const signin = async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
-};
+}; 
+
 
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(400).json("User with the same email already exists");
+    }
+
     const hashedPassword = bcrypt.hashSync(password, 10);
     const user = new User({
       name,
@@ -78,6 +84,8 @@ export const register = async (req, res) => {
     });
     const newUser = await user.save();
     res.status(201).json({ message: 'User registered successfully' });
+    signin({req : { body: { email, password } }, res});    
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -17,24 +17,29 @@ const SignUp = () => {
     setUser(newUser);
   };
 
-  const handleRegister = (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
-    fetch("http://localhost:3000/register", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-        name: name,
-      }),
-    })
-      .then((response) => response.json())
-      .then((user) => {
-        if (user._id) {
-          onRegister(user);
-        }
+
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+          name,
+        }),
       });
-    navigate("/UserHub");
+
+      const user = await response.json();
+      console.log(user);
+      if (user._id) {
+        onRegister(user);
+        navigate("/UserHub");
+      }
+    } catch (error) {
+      console.error("Error registering user:", error);
+    }
   };
 
   return (
