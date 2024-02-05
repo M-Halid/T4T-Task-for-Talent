@@ -24,10 +24,12 @@ const TagInput = ({ handleTagSelect }) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mt-10">
+      <h4 className="m-10">select tags of relevant technologies</h4>
       <select
         value={selectedCategory}
         onChange={(e) => setSelectedCategory(e.target.value)}
+        className="input input-bordered w-1/2"
       >
         {Object.keys(tags).map((category, index) => (
           <option key={index} value={category}>
@@ -35,13 +37,12 @@ const TagInput = ({ handleTagSelect }) => {
           </option>
         ))}
       </select>
-      <div className="pb-4">
-        <h6>enter tags describing skills and technologies</h6>
-      </div>
+      <div className="pb-4"></div>
       <input
         type="text"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        className="input input-bordered w-1/2"
       />
       {inputValue &&
         matchingTags.map((tag, index) => (
@@ -49,9 +50,13 @@ const TagInput = ({ handleTagSelect }) => {
             {tag}
           </div>
         ))}
-      <div className="selected-tags-container">
+      <div className="selected-tags-container mt-5">
         {selectedTags.map((tag, index) => (
-          <button key={index} onClick={() => handleTagSelect(tag)}>
+          <button
+            className="btn btn-ghost btn-sm"
+            key={index}
+            onClick={() => handleTagSelect(tag)}
+          >
             {tag}
           </button>
         ))}

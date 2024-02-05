@@ -1,9 +1,9 @@
-import GetStarted from "../components/GetStarted/GetStarted";
+import Calendar from "../components/Calendar/Calendar";
 
 const Page3 = () => {
   return (
     <div>
-      <GetStarted />
+      <Calendar />
     </div>
   );
 };
