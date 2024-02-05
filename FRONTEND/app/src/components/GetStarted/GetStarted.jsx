@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const GetStarted = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -16,10 +17,12 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
+              <h2 className="card-title">Registriere dich</h2>
+              <p>Einfache Anmeldung - Email, Passwort und los gehts</p>
               <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
+                <Link to="/signup">
+                  <button className="btn btn-primary">registrieren</button>
+                </Link>
               </div>
             </div>
           </div>
@@ -38,11 +41,12 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">Profil anlegen</h2>
+              <p>
+                Erstelle dein Nutzerprofil innerhalb weniger Minuten. Alles auf
+                einen Blick!
+              </p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>
@@ -60,11 +64,13 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">Talent Profil</h2>
+              <p>
+                {" "}
+                Präsentiere dich und deine Talente um Aufträge zu ergattern,
+                oder...
+              </p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>
@@ -82,11 +88,11 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">Tasks</h2>
+              <p>
+                ... erstelle Tasks auf die sich unsere Talents bewerben können
+              </p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>
@@ -104,11 +110,9 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">Finde was du suchst</h2>
+              <p>ob Talent oder Task - hier findest du was du suchst</p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>
@@ -126,11 +130,12 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">bestätige Aufträge</h2>
+              <p>
+                über freie Kommunikation ohne Restriktionen, wie und wo du
+                willst
+              </p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>
@@ -148,11 +153,11 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">Bearbeitung</h2>
+              <p>
+                Warte ab bis dein Task erfüllt wird oder mach dich an die Arbeit
+              </p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>
@@ -170,11 +175,9 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">Erfüllung</h2>
+              <p>ist die Bearbeitung gemäß der gestellten Kriterien erfolgt</p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>
@@ -192,11 +195,9 @@ const GetStarted = () => {
               </svg>
             </figure>
             <div className="card-body">
-              <h2 className="card-title">Life hack</h2>
-              <p>How to park your car at your garage?</p>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Learn now!</button>
-              </div>
+              <h2 className="card-title">Money maken</h2>
+              <p>... werden beide Seiten profitieren</p>
+              <div className="card-actions justify-end"></div>
             </div>
           </div>
         </div>

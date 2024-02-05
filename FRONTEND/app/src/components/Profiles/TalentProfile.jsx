@@ -72,14 +72,19 @@ const TalentProfile = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100">
       <div className="flex-col lg:flex-row-reverse">
-        <div className="card shrink-0 w-full max-w-xxl shadow-md bg-base-300 mt-3 mb-10">
+        <div className="card shrink-0 w-full max-w-xxl shadow-xl bg-base-300 mt-3 mb-10">
           <form className="card-body text-base mb-5" onSubmit={handleSubmit}>
-            <div className="flex justify-center">
-              <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md">
+            <div className="flex justify-center items-center flex-col">
+              <div>
+                <h3 className="text-primary text-center mb-4 ">
+                  Talent Profil
+                </h3>
+              </div>
+              <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md mb-10">
                 <img
                   src={profilePicture || profilePlaceholder}
                   alt="Profile"
-                  className="absolute top-0 left-0 w-full h-full object-cover"
+                  className="absolute top-0 left-0 w-full h-full object-cover justify-center"
                 />
                 <input
                   type="file"
@@ -88,7 +93,7 @@ const TalentProfile = () => {
                 />
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-x-10">
+            <div className="grid grid-cols-2 gap-x-10 mb-5">
               {/* Left column */}
               <div>
                 <Input

@@ -44,7 +44,7 @@ const SignUp = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="card bg-base-300 shadow-md flex-col shrink-0 w-full max-w-md ">
+      <div className="card bg-base-300 mt-3 mb-10 flex-col shrink-0 w-full max-w-md ">
         <form className="card-body" onSubmit={handleRegister}>
           <div className="form-control">
             <label className="label">
