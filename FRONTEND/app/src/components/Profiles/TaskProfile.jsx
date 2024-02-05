@@ -51,16 +51,21 @@ const TaskProfile = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100">
       <div className="flex-col lg:flex-row-reverse">
-        <div className="card shrink-0 w-full max-w-xxl shadow-md bg-base-300 mt-3 mb-3">
+        <div className="card shrink-0 w-full max-w-xxl shadow-xl bg-base-300 mt-3 mb-10">
           <form className="card-body text-base" onSubmit={handleSubmit}>
-            <Input
-              labelText="Task Description"
-              placeholder="Enter task description"
-              name="taskDescription"
-              type="textarea"
-              value={formData.taskDescription}
-              handleChange={handleChange}
-            />
+            <h3 className="text-primary text-center mb-4">
+              Erstelle einen Task
+            </h3>
+            <div className="mb-8 mt-10">
+              <Input
+                labelText="Task Description"
+                placeholder="Enter task description"
+                name="taskDescription"
+                type="textarea"
+                value={formData.taskDescription}
+                handleChange={handleChange}
+              />
+            </div>
             <div className="grid grid-cols-2 gap-x-10">
               {/* Left column */}
               <div>
@@ -117,14 +122,16 @@ const TaskProfile = () => {
                 />
               </div>
             </div>
-            <Input
-              labelText="Client Description"
-              placeholder="Enter client description"
-              name="clientDescription"
-              type="textarea"
-              value={formData.clientDescription}
-              handleChange={handleChange}
-            />
+            <div className="mt-8">
+              <Input
+                labelText="Client Description"
+                placeholder="Enter client description"
+                name="clientDescription"
+                type="textarea"
+                value={formData.clientDescription}
+                handleChange={handleChange}
+              />
+            </div>
             <TagInput handleTagSelect={handleTagSelect} />
             {/* Submit button */}
             <div className="form-control col-span-2 mt-6">

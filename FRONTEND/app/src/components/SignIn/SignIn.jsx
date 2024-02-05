@@ -17,7 +17,6 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const loadUser = (data) => {
-
     const userInfo = data.user;
     const talent = data.talent.talent;
 
@@ -32,32 +31,34 @@ const SignIn = () => {
       id: userInfo._id,
       name: userInfo.name,
 
-      email: userInfo.email,});
-       
-      if(data.talent.talent) {
-      const talent = data.talent.talent
-   
-      setIsLoggedIn({
-      id: userInfo._id,
-      name: userInfo.name,
-      email: userInfo.email, 
-      skills:  talent.skills,
+      email: userInfo.email,
+    });
 
-      workingFields: talent.workingFields,
-      age: talent.age,
-      gender: talent.gender,
-      location: talent.location,
-      background: talent.background,
-      resume: null,
-      portfolio: talent.portfolio,
-      github: talent.github,
-      linkedin: talent.linkedin,
-      education: talent.education,
-      certifications: talent.certifications,
-      certificationFile: null,
-      languages: talent.languages,
-    });}
-   };
+    if (data.talent.talent) {
+      const talent = data.talent.talent;
+
+      setIsLoggedIn({
+        id: userInfo._id,
+        name: userInfo.name,
+        email: userInfo.email,
+        skills: talent.skills,
+
+        workingFields: talent.workingFields,
+        age: talent.age,
+        gender: talent.gender,
+        location: talent.location,
+        background: talent.background,
+        resume: null,
+        portfolio: talent.portfolio,
+        github: talent.github,
+        linkedin: talent.linkedin,
+        education: talent.education,
+        certifications: talent.certifications,
+        certificationFile: null,
+        languages: talent.languages,
+      });
+    }
+  };
 
   const handleSignIn = (event) => {
     event.preventDefault();
@@ -95,7 +96,7 @@ const SignIn = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="card bg-base-300 shadow-md flex-col shrink-0 w-full max-w-md">
+      <div className="card bg-base-300 mt-3 mb-10 flex-col shrink-0 w-full max-w-md">
         <form className="card-body" onSubmit={handleSignIn}>
           <div className="form-control">
             <label className="label">

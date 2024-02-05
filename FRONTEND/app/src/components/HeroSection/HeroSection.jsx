@@ -12,8 +12,8 @@ const HeroSection = () => {
         src={videoAsset}
         type="video/mp4"
       />
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content text-center text-primary bg-base-300 bg-opacity-95 rounded-lg">
+
+      <div className="hero-content text-center text-primary bg-base-300 bg-opacity-95 rounded-lg shadow-xl ">
         <div className="max-w-md">
           <h1 className="mb-5 text-5xl font-bold">
             Task 4 Talent - Talent 4 Task
