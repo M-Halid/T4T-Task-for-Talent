@@ -53,15 +53,23 @@ const TaskProfile = () => {
       <div className="flex-col lg:flex-row-reverse">
         <div className="card shrink-0 w-full max-w-xxl shadow-md bg-base-300 mt-3 mb-3">
           <form className="card-body text-base" onSubmit={handleSubmit}>
+            <Input
+              labelText="Task Description"
+              placeholder="Enter task description"
+              name="taskDescription"
+              type="textarea"
+              value={formData.taskDescription}
+              handleChange={handleChange}
+            />
             <div className="grid grid-cols-2 gap-x-10">
               {/* Left column */}
               <div>
                 <Input
-                  labelText="Task Description"
-                  placeholder="Enter task description"
-                  name="taskDescription"
-                  type="textarea"
-                  value={formData.taskDescription}
+                  labelText="Client Name"
+                  placeholder="Enter client name"
+                  name="clientName"
+                  type="text"
+                  value={formData.clientName}
                   handleChange={handleChange}
                 />
                 <Input
@@ -83,14 +91,6 @@ const TaskProfile = () => {
               </div>
               {/* Right column */}
               <div>
-                <Input
-                  labelText="Client Name"
-                  placeholder="Enter client name"
-                  name="clientName"
-                  type="text"
-                  value={formData.clientName}
-                  handleChange={handleChange}
-                />
                 <Input
                   labelText="Client Industry"
                   placeholder="Enter client industry"
@@ -115,16 +115,16 @@ const TaskProfile = () => {
                   value={formData.clientLogo}
                   handleChange={handleChange}
                 />
-                <Input
-                  labelText="Client Description"
-                  placeholder="Enter client description"
-                  name="clientDescription"
-                  type="textarea"
-                  value={formData.clientDescription}
-                  handleChange={handleChange}
-                />
               </div>
             </div>
+            <Input
+              labelText="Client Description"
+              placeholder="Enter client description"
+              name="clientDescription"
+              type="textarea"
+              value={formData.clientDescription}
+              handleChange={handleChange}
+            />
             <TagInput handleTagSelect={handleTagSelect} />
             {/* Submit button */}
             <div className="form-control col-span-2 mt-6">

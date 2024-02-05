@@ -73,7 +73,7 @@ const TalentProfile = () => {
     <div className="flex justify-center items-center min-h-screen bg-base-100">
       <div className="flex-col lg:flex-row-reverse">
         <div className="card shrink-0 w-full max-w-xxl shadow-md bg-base-300 mt-3 mb-10">
-          <form className="card-body text-base" onSubmit={handleSubmit}>
+          <form className="card-body text-base mb-5" onSubmit={handleSubmit}>
             <div className="flex justify-center">
               <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md">
                 <img
@@ -237,7 +237,7 @@ const TalentProfile = () => {
               </div>
             </div>
             <Input
-              labelText="Beschreibungstext"
+              labelText="Beschreibung"
               placeholder="beschreibe dich"
               name="Beschreibungstext"
               type="textarea"

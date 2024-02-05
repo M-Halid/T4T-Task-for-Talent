@@ -28,7 +28,7 @@ const UserHub = () => {
   return (
     <div>
       <div className="flex justify-center items-center pt-12 pb-12 bg-base-100">
-        <div className="p-6 max-w-sm bg-base-300 rounded-xl shadow-md flex flex-col items-center justify-center space-y-4">
+        <div className="p-6 bg-base-300 rounded-xl shadow-md flex flex-col items-center justify-center space-y-4">
           <h2 className="text-primary mb-2">Choose your view</h2>
           <div className="flex items-center justify-between w-full">
             <span className="text-secondary">{showTasksLabel}</span>
