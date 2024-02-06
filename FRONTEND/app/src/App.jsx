@@ -13,6 +13,8 @@ import Page4 from "./pages/Page4";
 import TaskProfile from "./components/Profiles/TaskProfile.jsx";
 import UserHub from "./components/UserHub/UserHub";
 import GetStarted from "./components/GetStarted/GetStarted.jsx";
+import Contact from "./components/Contact/Contact.jsx";
+import About from "./components/About/About.jsx";
 import User from "./pages/User";
 import { TagsProvider } from "./contexts/TagsContext.jsx";
 export const AuthContext = createContext();
@@ -62,6 +64,8 @@ function App() {
                 <Route path="/create-task" element={<TaskProfile />} />
                 <Route path="/UserHub" element={<UserHub />} />
                 <Route path="/User" element={<User />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/about" element={<About />} />
               </Routes>
             </div>
             <Footer />
