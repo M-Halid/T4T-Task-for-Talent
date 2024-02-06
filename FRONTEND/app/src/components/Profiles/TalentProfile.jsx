@@ -8,9 +8,10 @@ import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
 
 const TalentProfile = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const [profilePicture, setProfilePicture] = useState(null);
 
   const [formData, setFormData] = useState({
-    name: "",
+    name: isLoggedIn.name,
     skills: "",
     workingFields: "",
     age: "",
@@ -25,11 +26,10 @@ const TalentProfile = () => {
     certifications: "",
     certificationFile: null,
     languages: "",
+    profileImage: profilePicture,
   });
 
-  // This state will hold the selected profilePicture file
-  const [profilePicture, setProfilePicture] = useState(null);
-
+  
   // This function will be called when the user selects a profilePicture file
   const handleImageUpload = (e) => {
     setProfilePicture(URL.createObjectURL(e.target.files[0]));

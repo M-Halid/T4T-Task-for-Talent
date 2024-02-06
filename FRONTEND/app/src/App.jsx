@@ -21,6 +21,7 @@ export const AuthContext = createContext();
 
 function App() {
   const { mode } = useContext(ModeContext);
+ 
   const [isLoggedIn, setIsLoggedIn] = useState({
     id: "",
     name: "",
@@ -41,6 +42,18 @@ function App() {
     languages: "",
     userId: "",
   });
+  useEffect(() => {
+    const localData = localStorage.getItem("currentUser");
+    console.log(localData);
+    if (localData) {
+      const currentUser = JSON.parse(localData);
+      if (currentUser.talent.talent) {
+        console.log(currentUser.talent.talent);
+        setIsLoggedIn(currentUser.talent.talent);
+      }
+    }
+    console.log(isLoggedIn);
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", mode);

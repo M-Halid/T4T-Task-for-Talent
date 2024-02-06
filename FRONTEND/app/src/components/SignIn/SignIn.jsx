@@ -6,31 +6,15 @@ const SignIn = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState({
-    id: "",
-    name: "",
-    email: "",
-    entries: 0,
-    joined: "",
-  });
 
   const navigate = useNavigate();
 
   const loadUser = (data) => {
     const userInfo = data.user;
-    const talent = data.talent.talent;
 
-    setUser({
-      id: userInfo._id,
-      name: userInfo.name,
-      email: userInfo.email,
-      entries: userInfo.entries,
-      joined: userInfo.joined,
-    });
     setIsLoggedIn({
       id: userInfo._id,
       name: userInfo.name,
-
       email: userInfo.email,
     });
 
@@ -38,11 +22,10 @@ const SignIn = () => {
       const talent = data.talent.talent;
 
       setIsLoggedIn({
-        id: userInfo._id,
-        name: userInfo.name,
-        email: userInfo.email,
+        id: talent._id,
+        name: talent.name,
+        email: talent.email,
         skills: talent.skills,
-
         workingFields: talent.workingFields,
         age: talent.age,
         gender: talent.gender,
@@ -78,6 +61,7 @@ const SignIn = () => {
         console.log(user);
         if (user.user._id) {
           loadUser(user);
+          localStorage.setItem("currentUser", JSON.stringify(user));
           navigate("/UserHub");
         }
       })
