@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const GetStarted = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="carousel carousel-center max-w-md p-4 space-x-4 bg-neutral rounded-box">
+      <div className="carousel carousel-center max-w-4xl p-4 space-x-4 bg-neutral shadow-xl rounded-box">
         <div className="carousel-item">
           <div className="card w-96 glass">
             <figure>
