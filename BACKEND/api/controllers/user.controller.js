@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
 import {TalentProfileModel} from "../models/talent.model.js";
 import {TaskProfileModel} from "../models/task.model.js";
+import e from "cors";
 
 export const getUsers = async (req, res) => {
   try {
@@ -12,7 +13,8 @@ export const getUsers = async (req, res) => {
   }
 };
 export const signin = async (req, res) => {
-  const { email, password, id } = req.body;
+  console.log(req.body);
+  const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(400).json("Bad Request: Missing email or password");
@@ -79,19 +81,22 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
-      entries: 0,
       joined: new Date(),
     });
     const newUser = await user.save();
-    res.status(201).json({ message: 'User registered successfully' });
-    signin({req : { body: { email, password } }, res});    
+
+    // Call signin after registering the user
+    console.log(email, password); 
+    await signin({ body: {email: email, password: password } }, res );
 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+
 export const newProfileTalent = async (req, res) => {
+  
   // Handle form submission
     try {
       const talentProfile = new TalentProfileModel(req.body);
@@ -123,14 +128,22 @@ export const updateTalent = async (req, res) => {
       const existingTalent = await TalentProfileModel.findOne({ email });
 
       if (!existingTalent) {
-          throw new Error('Talent profile not found');
+      console.log('Talent profile not found and creating a new profile');
+      try {
+        const talentProfile = new TalentProfileModel(updatedProfile);
+        await talentProfile.save();
+        res.status(201).json({ message: 'Talent profile submitted successfully!' });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
       }
+      }else{
 
       // Update the talent profile with the new data
       existingTalent.set(updatedProfile);
       await existingTalent.save();
 
-      return { message: 'Talent profile updated successfully' };
+      return { message: 'Talent profile updated successfully' };}
   } catch (error) {
       console.error('Error updating talent profile:', error);
       

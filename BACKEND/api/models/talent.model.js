@@ -17,6 +17,7 @@ const talentProfileSchema = new mongoose.Schema({
   certifications: { type: String },
   certificationFile: { type: String }, // You may need to handle file uploads separately
   languages: { type: String },
+  profileImage: {data:Buffer, type: String}
   });
 
 const TalentProfileModel = mongoose.model('TalentProfile', talentProfileSchema);
