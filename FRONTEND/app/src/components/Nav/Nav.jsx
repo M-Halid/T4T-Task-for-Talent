@@ -4,6 +4,7 @@ import Menu from "./Menu";
 import Menu2 from "./Menu2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../App";
+import logo from "../../assets/tft.jpg";
 
 const Nav = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
@@ -68,6 +69,7 @@ const Nav = () => {
         <a className="btn btn-ghost text-xl" onClick={() => navigate("/")}>
           T4T 2024
         </a>
+        <img src={logo} alt="company logo" className="w-8" />
       </div>
       <div className="flex-none">
         <label className="cursor-pointer grid place-items-center">

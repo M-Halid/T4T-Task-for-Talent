@@ -15,10 +15,9 @@ const Menu2 = ({ items, setIsOpen }) => {
     navigate(item.path);
     setIsOpen(false);
     if (item.name === "Sign Out") {
-      localStorage.clear()
-      window.location.reload()};
-
-    
+      localStorage.clear();
+      window.location.reload();
+    }
   };
 
   useEffect(() => {
