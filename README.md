@@ -18,5 +18,3 @@ Plattform zur Vermittlung von IT- Aufträgen an Freelancer
 - vorherige custom components entfernt wegen möglicher Konflikte mit Tailwind und DaisyUI setup
 
 - Tailwind und DaisyUI setup
-
-test
