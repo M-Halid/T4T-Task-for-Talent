@@ -29,6 +29,7 @@ function App() {
 
   const [userProfile, setUserProfile] = useState({
     id: "",
+    email: "",
     name: "",
     age: "",
     gender: "",

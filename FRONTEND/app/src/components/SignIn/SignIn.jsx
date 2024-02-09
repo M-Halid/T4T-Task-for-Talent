@@ -34,6 +34,7 @@ const SignIn = () => {
   const loadUser = (data) => {
     if (data && data.user && data.user._id) {
       const userProfile = data.user;
+      console.log("userProfile data:", userProfile);
       const talentProfile = data.talent ? data.talent.talent : null;
       const taskProfile = data.task ? data.task.task : null;
       const token = data.token; // Get the token from the response
