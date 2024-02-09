@@ -1,21 +1,20 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../App";
+import AuthContext from "../../contexts/AuthContext";
 
 const SignUp = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { setIsLoggedIn } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
- 
+
   const navigate = useNavigate();
 
   const onRegister = (newUser) => {
-    
-    setIsLoggedIn({ 
-      id: newUser.user._id, 
-      name: newUser.user.name, 
-      email: newUser.user.email 
+    setIsLoggedIn({
+      id: newUser.user._id,
+      name: newUser.user.name,
+      email: newUser.user.email,
     });
   };
 

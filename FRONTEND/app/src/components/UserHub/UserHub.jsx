@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import TagInput from "../Tags/TagInput";
 import { TagsContext } from "../../contexts/TagsContext";
-import { useContext } from "react";
+import UserContext from "../../contexts/UserContext";
+import TalentContext from "../../contexts/TalentContext";
+import TaskContext from "../../contexts/TaskContext";
 
 const UserHub = () => {
   // Feed selection
@@ -18,8 +20,12 @@ const UserHub = () => {
   const showFreelancersLabel = "Talents";
 
   // Tags
-
   const { selectedTags, setSelectedTags } = useContext(TagsContext);
+
+  // User, Talent, and Task profiles
+  const { userProfile } = useContext(UserContext);
+  const { talentProfile } = useContext(TalentContext);
+  const { taskProfile } = useContext(TaskContext);
 
   const handleTagSelect = (tag) => {
     setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));

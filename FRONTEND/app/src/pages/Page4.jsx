@@ -1,9 +1,9 @@
-import UserDetail from "../components/User/UserDetail";
+import UserProfile from "../components/Profiles/UserProfile";
 
 const Page3 = () => {
   return (
     <div>
-      <UserDetail />
+      <UserProfile />
     </div>
   );
 };
