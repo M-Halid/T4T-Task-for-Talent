@@ -22,6 +22,7 @@ const TalentProfile = () => {
     certifications: "",
     certificationFile: null,
   });
+  const { selectedTags, setSelectedTags } = useContext(TagsContext);
   useEffect(() => {
     if (isLoggedIn && authToken) {
       console.log(`Sending request with auth token: ${authToken}`);
@@ -47,23 +48,24 @@ const TalentProfile = () => {
               certificationFile: null,
               tags: [],
             });
+            setSelectedTags([]);
           } else {
             setFormData(response.data);
+            setSelectedTags(response.data.tags); // Set the selected tags
           }
         })
         .catch((error) => {
           console.error("Error fetching talent profile:", error);
         });
     }
-  }, [isLoggedIn, authToken]);
+  }, [isLoggedIn, authToken, setSelectedTags]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => {
       return { ...prevFormData, [name]: value };
     });
   };
-
-  const { selectedTags, setSelectedTags } = useContext(TagsContext);
 
   const handleTagSelect = (tag) => {
     setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
@@ -73,9 +75,13 @@ const TalentProfile = () => {
     console.log("Beginning talent update:", userEmail);
     try {
       console.log(authToken);
+
+      // Add the selected tags to the formData
+      const updatedFormData = { ...formData, tags: selectedTags };
+
       const response = await axios.put(
         "http://localhost:3000/updateTalentProfile",
-        formData,
+        updatedFormData,
         {
           headers: {
             "Content-Type": "application/json",

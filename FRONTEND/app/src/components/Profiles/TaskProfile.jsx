@@ -20,6 +20,7 @@ const TaskProfile = () => {
     clientDescription: "",
     tags: [],
   });
+  const { selectedTags, setSelectedTags } = useContext(TagsContext);
 
   useEffect(() => {
     if (isLoggedIn && authToken) {
@@ -44,15 +45,17 @@ const TaskProfile = () => {
               clientDescription: "",
               tags: [],
             });
+            setSelectedTags([]);
           } else {
             setFormData(response.data);
+            setSelectedTags(response.data.tags); // Set the selected tags
           }
         })
         .catch((error) => {
           console.error("Error fetching task profile:", error);
         });
     }
-  }, [isLoggedIn, authToken]);
+  }, [isLoggedIn, authToken, setSelectedTags]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,8 +63,6 @@ const TaskProfile = () => {
       return { ...prevFormData, [name]: value };
     });
   };
-
-  const { selectedTags, setSelectedTags } = useContext(TagsContext);
 
   const handleTagSelect = (tag) => {
     setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
@@ -72,9 +73,13 @@ const TaskProfile = () => {
     console.log("Beginning task update:", userEmail);
     try {
       console.log(authToken);
+
+      // Add the selected tags to the formData
+      const updatedFormData = { ...formData, tags: selectedTags };
+
       const response = await axios.put(
         "http://localhost:3000/updateTaskProfile",
-        formData,
+        updatedFormData, // Use the updated formData
         {
           headers: {
             "Content-Type": "application/json",
