@@ -1,39 +1,26 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../../App";
+import AuthContext from "../../contexts/AuthContext";
 import TagInput from "../Tags/TagInput";
 import { TagsContext } from "../../contexts/TagsContext";
 import Input from "./Inputs/Input";
 import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
 
 const TalentProfile = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
-  const [profilePicture, setProfilePicture] = useState(null);
+  const { isLoggedIn } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     name: isLoggedIn.name,
     skills: "",
     workingFields: "",
-    age: "",
-    gender: null,
-    location: "",
     background: "",
     resume: null,
     portfolio: "",
     github: "",
-    linkedin: "",
     education: "",
     certifications: "",
     certificationFile: null,
-    languages: "",
-    profileImage: profilePicture,
   });
-
-  
-  // This function will be called when the user selects a profilePicture file
-  const handleImageUpload = (e) => {
-    setProfilePicture(URL.createObjectURL(e.target.files[0]));
-  };
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -82,14 +69,9 @@ const TalentProfile = () => {
               </div>
               <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md mb-10">
                 <img
-                  src={profilePicture || profilePlaceholder}
+                  src={isLoggedIn.profileImage || profilePlaceholder}
                   alt="Profile"
-                  className="absolute top-0 left-0 w-full h-full object-cover justify-center"
-                />
-                <input
-                  type="file"
-                  onChange={handleImageUpload}
-                  className="w-full h-full absolute top-0 left-0 opacity-0 cursor-pointer"
+                  className="absolute top-0 left-0 w-full h-full object-cover"
                 />
               </div>
             </div>
@@ -97,98 +79,12 @@ const TalentProfile = () => {
               {/* Left column */}
               <div>
                 <Input
-                  labelText="Name"
-                  placeholder="Name"
-                  name="name"
-                  value={formData.name}
-                  handleChange={handleChange}
-                />
-                <Input
-                  labelText="Fähigkeiten"
-                  placeholder="Fähigkeiten"
-                  name="skills"
-                  value={formData.skills}
-                  handleChange={handleChange}
-                />
-
-                <Input
                   labelText="Arbeitsfelder"
                   placeholder="Arbeitsfelder"
                   name="workingFields"
                   value={formData.workingFields}
                   handleChange={handleChange}
                 />
-                <Input
-                  labelText="Alter"
-                  placeholder="Alter"
-                  name="age"
-                  type="number"
-                  min="18"
-                  value={formData.age}
-                  handleChange={handleChange}
-                />
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Geschlecht</span>
-                    <div className="space-x-2">
-                      <label>
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="male"
-                          className="radio radio-primary transform scale-75"
-                          checked={formData.gender === "male"}
-                          onChange={handleChange}
-                        />
-                        <span className="ml-2 text-sm">Männlich</span>
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="female"
-                          className="radio radio-primary transform scale-75"
-                          checked={formData.gender === "female"}
-                          onChange={handleChange}
-                        />
-                        <span className="ml-2 text-sm">Weiblich</span>
-                      </label>
-                    </div>
-                  </label>
-                </div>
-                <Input
-                  labelText="Ort/Stadt"
-                  placeholder="Ort/Stadt"
-                  name="location"
-                  value={formData.location}
-                  handleChange={handleChange}
-                />
-                <Input
-                  labelText="Languages"
-                  placeholder="Languages"
-                  name="languages"
-                  value={formData.languages}
-                  handleChange={handleChange}
-                />
-                <Input
-                  labelText="Hintergrund"
-                  placeholder="Hintergrund"
-                  name="background"
-                  type="textarea"
-                  value={formData.background}
-                  handleChange={handleChange}
-                />
-                {/* Add other form fields for the left column here */}
-              </div>
-              {/* Right column */}
-              <div>
-                <Input
-                  labelText="Resume/CV"
-                  name="resume"
-                  type="file"
-                  handleChange={handleChange}
-                />
-
                 <Input
                   labelText="Portfolio"
                   placeholder="Portfolio URL"
@@ -205,20 +101,14 @@ const TalentProfile = () => {
                   handleChange={handleChange}
                 />
 
+                {/* Add other form fields for the left column here */}
+              </div>
+              {/* Right column */}
+              <div>
                 <Input
-                  labelText="LinkedIn"
-                  placeholder="LinkedIn Profile URL"
-                  name="linkedin"
-                  value={formData.linkedin}
-                  handleChange={handleChange}
-                />
-
-                <Input
-                  labelText="Education"
-                  placeholder="Education"
-                  name="education"
-                  type="textarea"
-                  value={formData.education}
+                  labelText="Resume/CV"
+                  name="resume"
+                  type="file"
                   handleChange={handleChange}
                 />
 
@@ -242,11 +132,27 @@ const TalentProfile = () => {
               </div>
             </div>
             <Input
-              labelText="Beschreibung"
-              placeholder="beschreibe dich"
-              name="Beschreibungstext"
+              labelText="Hintergrund"
+              placeholder="Hintergrund"
+              name="background"
               type="textarea"
-              value={formData.Beschreibungstext}
+              value={formData.background}
+              handleChange={handleChange}
+            />
+            <Input
+              labelText="Ausbildung"
+              placeholder="beschreibe relevante Schritte deiner Ausbildung"
+              name="edducation"
+              type="textarea"
+              value={formData.education}
+              handleChange={handleChange}
+            />
+            <Input
+              labelText="Beschreibung"
+              placeholder="beschreibe deine Arbeit"
+              name="WorkDescription"
+              type="textarea"
+              value={formData.WorkDescription}
               handleChange={handleChange}
             />
 

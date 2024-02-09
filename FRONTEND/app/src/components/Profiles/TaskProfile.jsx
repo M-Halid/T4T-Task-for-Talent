@@ -1,12 +1,12 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from "../../App"; // Path to your App component
+import AuthContext from "../../contexts/AuthContext"; // Path to your App component
 import Input from "./Inputs/Input";
 import TagInput from "../Tags/TagInput";
 import { TagsContext } from "../../contexts/TagsContext";
 
 const TaskProfile = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     taskDescription: "",
     requiredSkills: "",
@@ -14,7 +14,7 @@ const TaskProfile = () => {
     clientName: "",
     clientIndustry: "",
     clientWebsite: "",
-    clientLogo: "",
+    pay: "",
     clientDescription: "",
   });
 
@@ -113,11 +113,11 @@ const TaskProfile = () => {
                   handleChange={handleChange}
                 />
                 <Input
-                  labelText="Client Logo"
-                  placeholder="Enter client logo URL"
-                  name="clientLogo"
+                  labelText="Pay"
+                  placeholder="enter pay amount"
+                  name="pay"
                   type="text"
-                  value={formData.clientLogo}
+                  value={formData.pay}
                   handleChange={handleChange}
                 />
               </div>

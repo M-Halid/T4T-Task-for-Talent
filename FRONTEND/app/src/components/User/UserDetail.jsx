@@ -1,20 +1,18 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-import { AuthContext } from '../../App'; // Pfad zu Ihrer App-Komponente
-import Input from "../Profiles/Inputs/Input"
+import AuthContext from "../../contexts/AuthContext"; // Pfad zu Ihrer App-Komponente
+import Input from "../Profiles/Inputs/Input";
 import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
-
-
 
 const UserDetail = () => {
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(true);
-  
+
   const [formData, setFormData] = useState({
     name: isLoggedIn.name, //required
-    skills: isLoggedIn.skills,            //required
-    workingFields: isLoggedIn.workingFields,     //required
-    age: isLoggedIn.age,              //required
+    skills: isLoggedIn.skills, //required
+    workingFields: isLoggedIn.workingFields, //required
+    age: isLoggedIn.age, //required
     gender: isLoggedIn.gender,
     location: isLoggedIn.location,
     background: isLoggedIn.background,
@@ -48,7 +46,7 @@ const UserDetail = () => {
 
   const updateTalent = (event) => {
     event.preventDefault();
-  
+
     fetch("http://localhost:3000/updateTalent", {
       method: "PUT",
       headers: {
@@ -74,10 +72,10 @@ const UserDetail = () => {
         console.error("Error updating talent profile:", error.message);
         // Handle error, show error messages, etc.
       });
-  
-      setIsEditing(!isEditing);
-    };
-  
+
+    setIsEditing(!isEditing);
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100">
       <div className="card bg-base-100 shadow-xl">
@@ -96,12 +94,13 @@ const UserDetail = () => {
                     onChange={handleImageUpload}
                     className="w-full h-full absolute top-0 left-0 opacity-0 cursor-pointer"
                     readOnly={isEditing}
-                 />
+                  />
                 </div>
-               
               </div>
-              <button type="button" onClick={() => setIsEditing(!isEditing) }>Edit Profile</button>
-         
+              <button type="button" onClick={() => setIsEditing(!isEditing)}>
+                Edit Profile
+              </button>
+
               <div className="grid grid-cols-2 gap-x-10">
                 {/* Left column */}
                 <div>
@@ -112,9 +111,8 @@ const UserDetail = () => {
                     value={formData.name}
                     handleChange={handleChange}
                     readOnly={isEditing}
-                    />
+                  />
                   <Input
-                    
                     labelText="Fähigkeiten"
                     placeholder="Fähigkeiten"
                     name="skills"
@@ -151,9 +149,9 @@ const UserDetail = () => {
                             name="gender"
                             value="male"
                             className="radio radio-primary transform scale-75"
-                            checked={formData.gender ==="male"}
+                            checked={formData.gender === "male"}
                             onChange={handleChange}
-                            disabled = {isEditing}
+                            disabled={isEditing}
                             //disabled
                           />
                           <span className="ml-2 text-sm">Männlich</span>
@@ -166,8 +164,8 @@ const UserDetail = () => {
                             className="radio radio-primary transform scale-75"
                             checked={formData.gender === "female"}
                             onChange={handleChange}
-                            disabled = {isEditing}
-                         />
+                            disabled={isEditing}
+                          />
                           <span className="ml-2 text-sm">Weiblich</span>
                         </label>
                       </div>
@@ -275,12 +273,14 @@ const UserDetail = () => {
                 type="textarea"
                 value={formData.Beschreibungstext}
                 handleChange={handleChange}
-                    readOnly={isEditing}
+                readOnly={isEditing}
               />
               {/* Submit button */}
-              { !isEditing ?  <div className="form-control col-span-2 mt-6">
-                <input type="submit" value="SPEICHERN" className="btn" />
-              </div> : null}
+              {!isEditing ? (
+                <div className="form-control col-span-2 mt-6">
+                  <input type="submit" value="SPEICHERN" className="btn" />
+                </div>
+              ) : null}
             </form>
           </div>
         </div>

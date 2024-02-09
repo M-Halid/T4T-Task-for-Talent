@@ -3,7 +3,7 @@ import { ModeContext } from "../../contexts/ThemeContext";
 import Menu from "./Menu";
 import Menu2 from "./Menu2";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../App";
+import AuthContext from "../../contexts/AuthContext";
 import logo from "../../assets/tft.jpg";
 
 const Nav = () => {
@@ -25,7 +25,7 @@ const Nav = () => {
     { name: "Signup", path: "/signup" },
   ];
   const menu2ItemsToUser = [
-    { name: "User Profile", path: "/User" },
+    { name: "User Profile", path: "/UserProfile" },
     { name: "Sign Out", path: "/" },
   ];
 
@@ -39,6 +39,11 @@ const Nav = () => {
   };
   const toggleMode = () => {
     setMode((prevMode) => (prevMode === "dark" ? "light" : "dark"));
+  };
+
+  const handleSignOut = () => {
+    setIsLoggedIn({});
+    navigate("/");
   };
 
   return (
@@ -68,8 +73,8 @@ const Nav = () => {
       <div className="flex-1">
         <a className="btn btn-ghost text-xl" onClick={() => navigate("/")}>
           T4T 2024
+          <img src={logo} alt="company logo" className="w-8" />
         </a>
-        <img src={logo} alt="company logo" className="w-8" />
       </div>
       <div className="flex-none">
         <label className="cursor-pointer grid place-items-center">
@@ -131,8 +136,9 @@ const Nav = () => {
         {isOpen && <Menu items={menu1Items} setIsOpen={setIsOpen} />}
         {isOpen2 && (
           <Menu2
-            items={!isLoggedIn.name ? menu2ItemsToSign : menu2ItemsToUser}
+            items={!isLoggedIn ? menu2ItemsToSign : menu2ItemsToUser}
             setIsOpen={setIsOpen2}
+            onSignOut={handleSignOut}
           />
         )}
       </div>

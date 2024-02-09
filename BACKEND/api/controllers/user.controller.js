@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
-import {TalentProfileModel} from "../models/talent.model.js";
-import {TaskProfileModel} from "../models/task.model.js";
-import e from "cors";
+import { TalentProfileModel } from "../models/talent.model.js";
+import { TaskProfileModel } from "../models/task.model.js";
+import jwt from "jsonwebtoken";
 
 export const getUsers = async (req, res) => {
   try {
@@ -48,9 +48,23 @@ export const signin = async (req, res) => {
               }
             : {};
 
+          // Create JWT payload
+          const payload = {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+            // Add more user properties here if needed
+          };
+
+          // Sign the payload and create the token
+          const secret = process.env.JWT_SECRET;
+          const options = { expiresIn: "1h" };
+          const token = jwt.sign(payload, secret, options);
+
           res.json({
             user: userResponse,
             talent: talentResponse,
+            token, // Include the token in the response
           });
         } else {
           res.status(400).json("Incorrect password");
@@ -63,8 +77,7 @@ export const signin = async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
-}; 
-
+};
 
 export const register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -86,70 +99,92 @@ export const register = async (req, res) => {
     const newUser = await user.save();
 
     // Call signin after registering the user
-    console.log(email, password); 
-    await signin({ body: {email: email, password: password } }, res );
-
+    console.log(email, password);
+    await signin({ body: { email: email, password: password } }, res);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-
 export const newProfileTalent = async (req, res) => {
-  
-  // Handle form submission
-    try {
-      const talentProfile = new TalentProfileModel(req.body);
-      await talentProfile.save();
-      res.status(201).json({ message: 'Talent profile submitted successfully!' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-};
-
-export const newProfileTask = async (req, res) => {
-  // Handle form submission
-    try {
-      const taskProfile = new TaskProfileModel(req.body);
-      await taskProfile.save();
-      console.log(taskProfile);
-      res.status(201).json({ message: 'Task profile submitted successfully!' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-};
-export const updateTalent = async (req, res) => {
-  const { email, updatedProfile } = req.body;
-  console.log("email:", email, "updatedProfile:", updatedProfile);
- try {
-      // Assuming you have some database connection and models set up
-      const existingTalent = await TalentProfileModel.findOne({ email });
-
-      if (!existingTalent) {
-      console.log('Talent profile not found and creating a new profile');
-      try {
-        const talentProfile = new TalentProfileModel(updatedProfile);
-        await talentProfile.save();
-        res.status(201).json({ message: 'Talent profile submitted successfully!' });
-      } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-      }
-      }else{
-
-      // Update the talent profile with the new data
-      existingTalent.set(updatedProfile);
-      await existingTalent.save();
-
-      return { message: 'Talent profile updated successfully' };}
+  try {
+    const talentProfile = new TalentProfileModel({
+      ...req.body,
+      userId: req.user._id,
+    });
+    await talentProfile.save();
+    res.status(201).json({ message: "Talent profile submitted successfully!" });
   } catch (error) {
-      console.error('Error updating talent profile:', error);
-      
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
+export const newProfileTask = async (req, res) => {
+  try {
+    const taskProfile = new TaskProfileModel({
+      ...req.body,
+      userId: req.user._id,
+    });
+    await taskProfile.save();
+    res.status(201).json({ message: "Task profile submitted successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updateTalent = async (req, res) => {
+  const { email, updatedProfile } = req.body;
+  try {
+    const existingTalent = await TalentProfileModel.findOne({
+      email,
+      userId: req.user._id,
+    });
+    if (!existingTalent) {
+      const talentProfile = new TalentProfileModel({
+        ...updatedProfile,
+        userId: req.user._id,
+      });
+      await talentProfile.save();
+      res
+        .status(201)
+        .json({ message: "Talent profile submitted successfully!" });
+    } else {
+      existingTalent.set(updatedProfile);
+      await existingTalent.save();
+      res.json({ message: "Talent profile updated successfully" });
+    }
+  } catch (error) {
+    console.error("Error updating talent profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updateTask = async (req, res) => {
+  const { email, updatedProfile } = req.body;
+  try {
+    const existingTask = await TaskProfileModel.findOne({
+      email,
+      userId: req.user._id,
+    });
+    if (!existingTask) {
+      const taskProfile = new TaskProfileModel({
+        ...updatedProfile,
+        userId: req.user._id,
+      });
+      await taskProfile.save();
+      res.status(201).json({ message: "Task profile submitted successfully!" });
+    } else {
+      existingTask.set(updatedProfile);
+      await existingTask.save();
+      res.json({ message: "Task profile updated successfully" });
+    }
+  } catch (error) {
+    console.error("Error updating task profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export const getProfile = async (req, res) => {
   const { id } = req.params;
@@ -165,45 +200,104 @@ export const getProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const updateProfile = async (req, res) => {
+  const { id } = req.params;
+  const updatedUser = req.body;
 
-
-
-
-
-
-
-
-  /*try {
-    const user = await User.findById(id);
-    console.log("User:", user); // Log the user object
-
+  try {
+    const user = await User.findByIdAndUpdate(id, updatedUser, { new: true });
     if (user) {
-      user.entries++;
-      console.log("User after incrementing entries:", user); // Log the user object after incrementing entries
-
-      await user.save();
-
-      // Call the Clarifai API and calculate the face locations
-      let data;
-      try {
-        data = await callClarifaiApi(imageUrl);
-      } catch (error) {
-        console.log("Error calling Clarifai API:", error); // Log the error from the Clarifai API call
-        return res
-          .status(500)
-          .json({ message: "Error calling Clarifai API: " + error.message });
-      }
-
-      const faceLocations = calculateFaceLocation(data);
-
-      // Return the updated entries count and the face locations
-      res.json({ entries: user.entries, faceLocations });
+      res.json(user);
     } else {
-      console.log("User not found"); // Log if the user is not found
-      res.status(404).json({ message: "User not found" });
+      res.status(404).json("No such user");
     }
   } catch (error) {
-    console.log("Error in updateImage:", error); // Log any errors that occur during the function
     res.status(500).json({ message: error.message });
-  }*/
+  }
+};
 
+export const deleteProfile = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await User.findByIdAndDelete(id);
+    if (user) {
+      res.json({ message: "User deleted successfully" });
+    } else {
+      res.status(404).json("No such user");
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateUserProfile = async (req, res) => {
+  const updatedUser = req.body;
+
+  console.log("Updated user data:", updatedUser); // Log the updated user data
+
+  try {
+    console.log("User ID:", req.user._id); // Log the user ID
+
+    const user = await User.findByIdAndUpdate(req.user._id, updatedUser, {
+      new: true,
+    });
+
+    if (user) {
+      console.log("Updated user:", user); // Log the updated user
+      res.json(user);
+    } else {
+      console.log("No user found with this ID"); // Log if no user is found
+    }
+  } catch (error) {
+    console.log("Error updating user:", error); // Log any errors
+    res.status(500).json({ message: error.message });
+  }
+};
+export const updateTalentProfile = async (req, res) => {
+  const updatedTalent = req.body;
+
+  try {
+    const talent = await TalentProfileModel.findOneAndUpdate(
+      { userId: req.user._id },
+      updatedTalent,
+      { new: true }
+    );
+
+    if (talent) {
+      res.json(talent);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updateTaskProfile = async (req, res) => {
+  const updatedTask = req.body;
+
+  try {
+    const task = await TaskProfileModel.findOneAndUpdate(
+      { userId: req.user._id },
+      updatedTask,
+      { new: true }
+    );
+
+    if (task) {
+      res.json(task);
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json("No such user");
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

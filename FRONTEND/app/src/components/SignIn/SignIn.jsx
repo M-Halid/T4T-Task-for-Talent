@@ -1,45 +1,49 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../App";
+import AuthContext from "../../contexts/AuthContext";
 
 const SignIn = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const {
+    isLoggedIn,
+    setIsLoggedIn,
+    setUserProfile,
+    setTalentProfile,
+    setTaskProfile,
+    authToken,
+    setAuthToken, // Add this to your context
+  } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/UserHub");
+    }
+  }, [isLoggedIn, navigate]);
+
+  const handleLogin = (userProfile, talentProfile, taskProfile, token) => {
+    setUserProfile(userProfile);
+    setTalentProfile(talentProfile);
+    setTaskProfile(taskProfile);
+    setIsLoggedIn({ name: userProfile.name }); // Assuming userProfile has a name property
+    setAuthToken(token); // Set the authToken in your context
+    localStorage.setItem("authToken", token); // Store the authToken in localStorage
+  };
 
   const loadUser = (data) => {
-    const userInfo = data.user;
+    if (data && data.user && data.user._id) {
+      const userProfile = data.user;
+      const talentProfile = data.talent ? data.talent.talent : null;
+      const taskProfile = data.task ? data.task.task : null;
+      const token = data.token; // Get the token from the response
 
-    setIsLoggedIn({
-      id: userInfo._id,
-      name: userInfo.name,
-      email: userInfo.email,
-    });
+      handleLogin(userProfile, talentProfile, taskProfile, token);
 
-    if (data.talent.talent) {
-      const talent = data.talent.talent;
-
-      setIsLoggedIn({
-        id: talent._id,
-        name: talent.name,
-        email: talent.email,
-        skills: talent.skills,
-        workingFields: talent.workingFields,
-        age: talent.age,
-        gender: talent.gender,
-        location: talent.location,
-        background: talent.background,
-        resume: null,
-        portfolio: talent.portfolio,
-        github: talent.github,
-        linkedin: talent.linkedin,
-        education: talent.education,
-        certifications: talent.certifications,
-        certificationFile: null,
-        languages: talent.languages,
-      });
+      localStorage.setItem("currentUser", JSON.stringify(data));
+      navigate("/UserHub");
+    } else {
+      console.error("Error: No data received or user data is incorrect");
     }
   };
 
@@ -58,12 +62,8 @@ const SignIn = () => {
     })
       .then((response) => response.json())
       .then((user) => {
-        console.log(user);
-        if (user.user._id) {
-          loadUser(user);
-          localStorage.setItem("currentUser", JSON.stringify(user));
-          navigate("/UserHub");
-        }
+        console.log("User data:", user);
+        loadUser(user);
       })
       .catch((error) => {
         console.error("Error:", error);
