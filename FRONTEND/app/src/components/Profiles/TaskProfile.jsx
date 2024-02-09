@@ -10,15 +10,6 @@ const TaskProfile = () => {
     useContext(AuthContext);
   const [isEditing, setIsEditing] = useState(true);
   const [formData, setFormData] = useState({
-    // taskDescription: "beschreibe deinen Task",
-    // requiredSkills: "welche Skills werden benötigt",
-    // experienceLevel: "wie viel Erfahrung wird benötigt",
-    // clientName: "wer ist der Kunde",
-    // clientIndustry: "in welcher Branche",
-    // clientWebsite: "Webseite des Kunden",
-    // pay: "wie viel wird bezahlt",
-    // clientDescription: "Beschreibung des Kunden",
-    // tags: [],
     taskDescription: "",
     requiredSkills: "",
     experienceLevel: "",

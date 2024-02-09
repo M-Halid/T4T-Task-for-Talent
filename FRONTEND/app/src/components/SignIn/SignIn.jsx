@@ -9,7 +9,6 @@ const SignIn = () => {
     setUserProfile,
     setTalentProfile,
     setTaskProfile,
-    authToken,
     setAuthToken, // Add this to your context
   } = useContext(AuthContext);
   const [email, setEmail] = useState("");

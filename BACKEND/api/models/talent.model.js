@@ -14,6 +14,7 @@ const talentProfileSchema = new mongoose.Schema({
   certificationFile: { type: String }, // You may need to handle file uploads separately
   profileImage: { data: Buffer, type: String },
   WorkDescription: { type: String },
+  tags: [{ type: String }],
   userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 

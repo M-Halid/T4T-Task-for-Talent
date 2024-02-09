@@ -9,15 +9,20 @@ import {
   updateTalent,
   updateProfile,
   deleteProfile,
-  updateTalentProfile,
-  updateTaskProfile,
   updateUserProfile,
   getUserProfile,
-  getTaskProfile,
-  getTalentProfile,
-  postTaskProfile,
-  postTalentProfile,
 } from "../controllers/user.controller.js";
+
+import {
+  getTaskProfile,
+  postTaskProfile,
+  updateTaskProfile,
+} from "../controllers/task.controller.js";
+import {
+  postTalentProfile,
+  getTalentProfile,
+  updateTalentProfile,
+} from "../controllers/talent.controller.js";
 import authenticate from "../middleware/auth.js";
 
 const router = express.Router();
