@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import AuthContext from "../../contexts/AuthContext";
 import TagInput from "../Tags/TagInput";
@@ -7,8 +7,9 @@ import Input from "./Inputs/Input";
 import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
 
 const TalentProfile = () => {
-  const { isLoggedIn } = useContext(AuthContext);
-
+  const { isLoggedIn, authToken, userEmail, setUserEmail } =
+    useContext(AuthContext);
+  const [isEditing, setIsEditing] = useState(true);
   const [formData, setFormData] = useState({
     name: isLoggedIn.name,
     skills: "",
@@ -21,15 +22,43 @@ const TalentProfile = () => {
     certifications: "",
     certificationFile: null,
   });
-
+  useEffect(() => {
+    if (isLoggedIn && authToken) {
+      console.log(`Sending request with auth token: ${authToken}`);
+      axios
+        .get("http://localhost:3000/TalentProfile", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+        .then((response) => {
+          if (response.status === 204) {
+            console.log("No TalentProfile exists yet for this user");
+            setFormData({
+              name: isLoggedIn.name,
+              skills: "",
+              workingFields: "",
+              background: "",
+              resume: null,
+              portfolio: "",
+              github: "",
+              education: "",
+              certifications: "",
+              certificationFile: null,
+              tags: [],
+            });
+          } else {
+            setFormData(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching talent profile:", error);
+        });
+    }
+  }, [isLoggedIn, authToken]);
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-
+    const { name, value } = e.target;
     setFormData((prevFormData) => {
-      if (type === "file") {
-        return { ...prevFormData, [name]: "" }; // files[0]
-      }
-
       return { ...prevFormData, [name]: value };
     });
   };
@@ -39,20 +68,53 @@ const TalentProfile = () => {
   const handleTagSelect = (tag) => {
     setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
   };
-
   const handleSubmit = async (e) => {
-    formData.email = isLoggedIn.email;
     e.preventDefault();
-    // Add client-side validation here if needed
-
+    console.log("Beginning talent update:", userEmail);
     try {
-      // Make a POST request to the server endpoint
-      await axios.post("http://localhost:3000/submitTalent", formData);
+      console.log(authToken);
+      const response = await axios.put(
+        "http://localhost:3000/updateTalentProfile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
-      // Optionally, you can handle success or redirect to another page
-      console.log("Talent profile submitted successfully");
+      if (response.status === 404) {
+        // TalentProfile doesn't exist, create a new one
+        const createResponse = await axios.post(
+          "http://localhost:3000/postTalentProfile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        console.log("New talent profile created:", createResponse.data);
+        return;
+      }
+
+      if (response.status !== 200) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = response.data;
+      console.log(result);
+
+      if (result.email) {
+        setUserEmail(result.email);
+      }
+      console.log("After setUserEmail result:", userEmail);
     } catch (error) {
-      console.error("Error submitting talent profile:", error);
+      console.error("Error updating talent profile:", error.message);
+    } finally {
+      setIsEditing(!isEditing);
     }
   };
 
