@@ -13,6 +13,10 @@ import {
   updateTaskProfile,
   updateUserProfile,
   getUserProfile,
+  getTaskProfile,
+  getTalentProfile,
+  postTaskProfile,
+  postTalentProfile,
 } from "../controllers/user.controller.js";
 import authenticate from "../middleware/auth.js";
 
@@ -31,5 +35,9 @@ router.put("/updateTalentProfile", authenticate, updateTalentProfile);
 router.put("/updateTaskProfile", authenticate, updateTaskProfile);
 router.get("/userProfile", authenticate, getUserProfile);
 router.delete("/profile/:id", authenticate, deleteProfile);
+router.get("/taskProfile", authenticate, getTaskProfile);
+router.get("/talentProfile", authenticate, getTalentProfile);
+router.post("/postTaskProfile", authenticate, postTaskProfile);
+router.post("/postTalentProfile", authenticate, postTalentProfile);
 
 export default router;

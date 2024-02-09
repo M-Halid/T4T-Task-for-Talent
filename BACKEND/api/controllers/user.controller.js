@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
-import { TalentProfileModel } from "../models/talent.model.js";
-import { TaskProfileModel } from "../models/task.model.js";
+import { TalentProfileModel as TalentProfile } from "../models/talent.model.js";
+import { TaskProfileModel as TaskProfile } from "../models/task.model.js";
 import jwt from "jsonwebtoken";
 
 export const getUsers = async (req, res) => {
@@ -21,10 +21,7 @@ export const signin = async (req, res) => {
   }
 
   try {
-    const [user, talent] = await Promise.all([
-      User.findOne({ email }),
-      TalentProfileModel.findOne({ email }),
-    ]);
+    const user = await User.findOne({ email });
 
     if (user) {
       bcrypt.compare(password, user.password, function (err, result) {
@@ -42,12 +39,6 @@ export const signin = async (req, res) => {
             joined: user.joined,
           };
 
-          const talentResponse = talent
-            ? {
-                talent,
-              }
-            : {};
-
           // Create JWT payload
           const payload = {
             id: user._id,
@@ -63,7 +54,6 @@ export const signin = async (req, res) => {
 
           res.json({
             user: userResponse,
-            talent: talentResponse,
             token, // Include the token in the response
           });
         } else {
@@ -276,17 +266,25 @@ export const updateTalentProfile = async (req, res) => {
 export const updateTaskProfile = async (req, res) => {
   const updatedTask = req.body;
 
+  console.log("Updated task data:", updatedTask); // Log the updated task data
+
   try {
-    const task = await TaskProfileModel.findOneAndUpdate(
+    console.log("User ID:", req.user._id); // Log the user ID
+
+    const task = await TaskProfile.findOneAndUpdate(
       { userId: req.user._id },
       updatedTask,
-      { new: true }
+      { new: true, upsert: true } // add upsert option here
     );
 
     if (task) {
+      console.log("Updated task:", task); // Log the updated task
       res.json(task);
+    } else {
+      console.log("No task found for this user"); // Log if no task is found
     }
   } catch (error) {
+    console.log("Error updating task:", error); // Log any errors
     res.status(500).json({ message: error.message });
   }
 };
@@ -298,6 +296,61 @@ export const getUserProfile = async (req, res) => {
     } else {
       res.status(404).json("No such user");
     }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getTaskProfile = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const taskProfile = await TaskProfile.findOne({ userId: userId });
+    if (!taskProfile) {
+      res.status(204).send("No TaskProfile exists yet for this user");
+    } else {
+      res.json(taskProfile);
+    }
+  } catch (err) {
+    res.status(500).send("Error occurred");
+  }
+};
+
+export const getTalentProfile = async (req, res) => {
+  try {
+    const talent = await TalentProfileModel.findOne({ userId: req.user._id });
+    if (talent) {
+      res.json(talent);
+    } else {
+      res.status(404).json("No talent profile found");
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+export const postTaskProfile = async (req, res) => {
+  const taskProfile = new TaskProfile({
+    ...req.body,
+    userId: req.user._id,
+  });
+
+  try {
+    const response = await taskProfile.save();
+    res.status(201).json(response);
+  } catch (error) {
+    console.error(error); // Log the entire error object
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const postTalentProfile = async (req, res) => {
+  const talentProfile = new TalentProfileModel({
+    ...req.body,
+    userId: req.user._id,
+  });
+
+  try {
+    const response = await talentProfile.save();
+    res.status(201).json(response);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -1,13 +1,24 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
-import AuthContext from "../../contexts/AuthContext"; // Path to your App component
+import AuthContext from "../../contexts/AuthContext";
 import Input from "./Inputs/Input";
 import TagInput from "../Tags/TagInput";
 import { TagsContext } from "../../contexts/TagsContext";
 
 const TaskProfile = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, authToken, userEmail, setUserEmail } =
+    useContext(AuthContext);
+  const [isEditing, setIsEditing] = useState(true);
   const [formData, setFormData] = useState({
+    // taskDescription: "beschreibe deinen Task",
+    // requiredSkills: "welche Skills werden benötigt",
+    // experienceLevel: "wie viel Erfahrung wird benötigt",
+    // clientName: "wer ist der Kunde",
+    // clientIndustry: "in welcher Branche",
+    // clientWebsite: "Webseite des Kunden",
+    // pay: "wie viel wird bezahlt",
+    // clientDescription: "Beschreibung des Kunden",
+    // tags: [],
     taskDescription: "",
     requiredSkills: "",
     experienceLevel: "",
@@ -16,7 +27,41 @@ const TaskProfile = () => {
     clientWebsite: "",
     pay: "",
     clientDescription: "",
+    tags: [],
   });
+
+  useEffect(() => {
+    if (isLoggedIn && authToken) {
+      console.log(`Sending request with auth token: ${authToken}`);
+      axios
+        .get("http://localhost:3000/TaskProfile", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        })
+        .then((response) => {
+          if (response.status === 204) {
+            console.log("No TaskProfile exists yet for this user");
+            setFormData({
+              taskDescription: "",
+              requiredSkills: "",
+              experienceLevel: "",
+              clientName: "",
+              clientIndustry: "",
+              clientWebsite: "",
+              pay: "",
+              clientDescription: "",
+              tags: [],
+            });
+          } else {
+            setFormData(response.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching task profile:", error);
+        });
+    }
+  }, [isLoggedIn, authToken]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,19 +77,52 @@ const TaskProfile = () => {
   };
 
   const handleSubmit = async (e) => {
-    formData.userId = isLoggedIn.id;
     e.preventDefault();
-    console.log(formData);
-    // Add client-side validation here if needed
-
+    console.log("Beginning task update:", userEmail);
     try {
-      // Make a POST request to the server endpoint
-      await axios.post("http://localhost:3000/submitTask", formData);
+      console.log(authToken);
+      const response = await axios.put(
+        "http://localhost:3000/updateTaskProfile",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
-      // Optionally, you can handle success or redirect to another page
-      console.log("Task profile submitted successfully");
+      if (response.status === 404) {
+        // TaskProfile doesn't exist, create a new one
+        const createResponse = await axios.post(
+          "http://localhost:3000/postTaskProfile",
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        console.log("New task profile created:", createResponse.data);
+        return;
+      }
+
+      if (response.status !== 200) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = response.data;
+      console.log(result);
+
+      if (result.email) {
+        setUserEmail(result.email);
+      }
+      console.log("After setUserEmail result:", userEmail);
     } catch (error) {
-      console.error("Error submitting task profile:", error);
+      console.error("Error updating task profile:", error.message);
+    } finally {
+      setIsEditing(!isEditing);
     }
   };
 

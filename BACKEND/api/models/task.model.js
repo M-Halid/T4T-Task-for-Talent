@@ -5,12 +5,11 @@ const taskProfileSchema = new mongoose.Schema({
   requiredSkills: { type: String },
   experienceLevel: {
     type: String,
-    enum: ["Beginner", "Intermediate", "Expert"],
   },
   clientName: { type: String },
   clientIndustry: { type: String },
   clientWebsite: { type: String },
-  pay: { type: Number },
+  pay: { type: String },
   clientDescription: { type: String },
 
   tags: [{ type: String }],
