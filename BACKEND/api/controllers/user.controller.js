@@ -254,6 +254,7 @@ export const updateUserProfile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 export const updateTalentProfile = async (req, res) => {
   const updatedTalent = req.body;
 

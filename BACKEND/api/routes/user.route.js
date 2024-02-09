@@ -28,7 +28,7 @@ router.post("/submitTask", authenticate, newProfileTask);
 router.put("/profile/:id", authenticate, updateProfile);
 router.put("/updateUserProfile", authenticate, updateUserProfile);
 router.put("/updateTalentProfile", authenticate, updateTalentProfile);
-router.put("/updateTaskProfile", updateTaskProfile);
+router.put("/updateTaskProfile", authenticate, updateTaskProfile);
 router.get("/userProfile", authenticate, getUserProfile);
 router.delete("/profile/:id", authenticate, deleteProfile);
 
