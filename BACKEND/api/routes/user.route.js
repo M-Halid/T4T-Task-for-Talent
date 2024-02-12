@@ -23,6 +23,11 @@ import {
   getTalentProfile,
   updateTalentProfile,
 } from "../controllers/talent.controller.js";
+import {
+  getAllTalentProfiles,
+  getAllTaskProfiles,
+  getAllUserProfiles,
+} from "../controllers/feed.controller.js";
 import authenticate from "../middleware/auth.js";
 
 const router = express.Router();
@@ -44,5 +49,8 @@ router.get("/taskProfile", authenticate, getTaskProfile);
 router.get("/talentProfile", authenticate, getTalentProfile);
 router.post("/postTaskProfile", authenticate, postTaskProfile);
 router.post("/postTalentProfile", authenticate, postTalentProfile);
+router.get("/getAllTalentProfiles", authenticate, getAllTalentProfiles);
+router.get("/getAllTaskProfiles", authenticate, getAllTaskProfiles);
+router.get("/getAllUserProfiles", authenticate, getAllUserProfiles);
 
 export default router;

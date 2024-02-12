@@ -59,7 +59,7 @@ const Nav = () => {
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            className="inline-block w-5 h-5 stroke-current"
+            className="inline-block w-5 h-5 stroke-current "
           >
             <path
               strokeLinecap="round"
@@ -73,7 +73,11 @@ const Nav = () => {
       <div className="flex-1">
         <a className="btn btn-ghost text-xl" onClick={() => navigate("/")}>
           T4T 2024
-          <img src={logo} alt="company logo" className="w-8" />
+          <img
+            src={logo}
+            alt="company logo"
+            className="w-8 border-accent border-2 rounded-full"
+          />
         </a>
       </div>
       <div className="flex-none">
