@@ -65,14 +65,17 @@ const TaskFeed = () => {
   }, [authToken, isLoggedIn, TaskData]);
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-col items-center">
       {profileData.map((profile) => {
         const task = TaskData.find((task) => task.userId === profile._id);
         if (task) {
           return (
-            <div className="flex space-x-4 w-screen" key={profile._id}>
-              <UserProfilePreview profile={profile} />
-              <TaskProfilePreview task={task} />
+            <div
+              className="grid grid-cols-3 gap-10 bg-accent shadow-md rounded-lg p-4 m-4 w-3/4"
+              key={profile._id}
+            >
+              <UserProfilePreview profile={profile} className="col-span-1" />
+              <TaskProfilePreview task={task} className="col-span-2" />
             </div>
           );
         }
@@ -81,5 +84,4 @@ const TaskFeed = () => {
     </div>
   );
 };
-
 export default TaskFeed;
