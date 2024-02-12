@@ -17,7 +17,11 @@ const HeroSection = () => {
       <div className="hero-content text-center text-primary bg-base-300 bg-opacity-95 rounded-lg shadow-xl ">
         <div className="max-w-md">
           <h3 className="mb-5 text-5xl font-bold">Task 4 Talent</h3>
-          <img className="w-24 mx-auto" src={logo} alt="company logo" />
+          <img
+            className="w-24 mx-auto border-accent border-2 rounded-full"
+            src={logo}
+            alt="company logo"
+          />
           <h3 className="mb-5 mt-5 text-5xl font-bold">Talent 4 Task</h3>
           <p className="mb-5 ">
             Die Plattform für die Vermittlung von IT Talenten und Aufträgen.
