@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const UserProfilePreview = ({ profile }) => {
   return (
-    <div>
+    <div className="card w-auto shadow-lg bg-base-300 p-5 ">
       <h2>{profile.name}</h2>
       <p>{profile.email}</p>
       <p>{profile.age}</p>
