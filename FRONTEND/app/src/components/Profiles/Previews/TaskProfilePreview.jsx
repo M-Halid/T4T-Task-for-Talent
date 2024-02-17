@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 const TaskProfilePreview = ({ task }) => {
   return (
-    <div>
+    <div className="card col-span-2 shadow-lg bg-base-300 p-5 ">
       <h2>{task.clientName}</h2>
       <p>{task.clientDescription}</p>
       <p>{task.clientIndustry}</p>
