@@ -130,6 +130,9 @@ const TaskProfile = () => {
             <h3 className="text-primary text-center mb-4">
               Erstelle einen Task
             </h3>
+            <button type="button" onClick={() => setIsEditing(!isEditing)}>
+              Edit Profile
+            </button>
             <div className="mb-8 mt-10">
               <Input
                 labelText="Task Description"
@@ -138,6 +141,7 @@ const TaskProfile = () => {
                 type="textarea"
                 value={formData.taskDescription}
                 handleChange={handleChange}
+                readOnly={isEditing}
               />
             </div>
             <div className="grid grid-cols-2 gap-x-10">
@@ -150,6 +154,7 @@ const TaskProfile = () => {
                   type="text"
                   value={formData.clientName}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
                 <Input
                   labelText="Required Skills"
@@ -158,6 +163,7 @@ const TaskProfile = () => {
                   type="text"
                   value={formData.requiredSkills}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
                 <Input
                   labelText="Experience Level"
@@ -166,6 +172,7 @@ const TaskProfile = () => {
                   type="text"
                   value={formData.experienceLevel}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
               </div>
               {/* Right column */}
@@ -177,6 +184,7 @@ const TaskProfile = () => {
                   type="text"
                   value={formData.clientIndustry}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
                 <Input
                   labelText="Client Website"
@@ -185,6 +193,7 @@ const TaskProfile = () => {
                   type="text"
                   value={formData.clientWebsite}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
                 <Input
                   labelText="Pay"
@@ -193,6 +202,7 @@ const TaskProfile = () => {
                   type="text"
                   value={formData.pay}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
               </div>
             </div>
@@ -204,13 +214,16 @@ const TaskProfile = () => {
                 type="textarea"
                 value={formData.clientDescription}
                 handleChange={handleChange}
+                readOnly={isEditing}
               />
             </div>
             <TagInput handleTagSelect={handleTagSelect} />
             {/* Submit button */}
-            <div className="form-control col-span-2 mt-6">
-              <input type="submit" value="Submit" className="btn" />
-            </div>
+            {!isEditing ? (
+              <div className="form-control col-span-2 mt-6">
+                <input type="submit" value="SPEICHERN" className="btn" />
+              </div>
+            ) : null}
           </form>
         </div>
       </div>

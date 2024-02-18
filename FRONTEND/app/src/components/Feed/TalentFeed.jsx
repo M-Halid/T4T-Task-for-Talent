@@ -73,7 +73,7 @@ const TalentFeed = () => {
         if (talent) {
           return (
             <div
-              className="grid grid-cols-3 gap-4 bg-accent shadow-md rounded-lg p-4 m-4 w-full"
+              className="grid grid-cols-3 gap-10 bg-accent shadow-md rounded-lg p-4 m-4 w-3/4"
               key={profile._id}
             >
               <UserProfilePreview profile={profile} className="col-span-1" />
