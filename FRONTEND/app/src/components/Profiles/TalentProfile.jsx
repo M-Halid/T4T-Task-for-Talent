@@ -23,6 +23,7 @@ const TalentProfile = () => {
     certificationFile: null,
   });
   const { selectedTags, setSelectedTags } = useContext(TagsContext);
+
   useEffect(() => {
     if (isLoggedIn && authToken) {
       console.log(`Sending request with auth token: ${authToken}`);
@@ -143,6 +144,9 @@ const TalentProfile = () => {
                 />
               </div>
             </div>
+            <button type="button" onClick={() => setIsEditing(!isEditing)}>
+              Edit Profile
+            </button>
             <div className="grid grid-cols-2 gap-x-10 mb-5">
               {/* Left column */}
               <div>
@@ -152,6 +156,7 @@ const TalentProfile = () => {
                   name="workingFields"
                   value={formData.workingFields}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
                 <Input
                   labelText="Portfolio"
@@ -159,6 +164,7 @@ const TalentProfile = () => {
                   name="portfolio"
                   value={formData.portfolio}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
 
                 <Input
@@ -167,6 +173,7 @@ const TalentProfile = () => {
                   name="github"
                   value={formData.github}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
 
                 {/* Add other form fields for the left column here */}
@@ -178,6 +185,7 @@ const TalentProfile = () => {
                   name="resume"
                   type="file"
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
 
                 <Input
@@ -187,6 +195,7 @@ const TalentProfile = () => {
                   type="textarea"
                   value={formData.certifications}
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
 
                 <Input
@@ -194,6 +203,7 @@ const TalentProfile = () => {
                   name="certificationFile"
                   type="file"
                   handleChange={handleChange}
+                  readOnly={isEditing}
                 />
 
                 {/* Add other form fields for the right column here */}
@@ -206,6 +216,7 @@ const TalentProfile = () => {
               type="textarea"
               value={formData.background}
               handleChange={handleChange}
+              readOnly={isEditing}
             />
             <Input
               labelText="Ausbildung"
@@ -214,6 +225,7 @@ const TalentProfile = () => {
               type="textarea"
               value={formData.education}
               handleChange={handleChange}
+              readOnly={isEditing}
             />
             <Input
               labelText="Beschreibung"
@@ -222,14 +234,17 @@ const TalentProfile = () => {
               type="textarea"
               value={formData.WorkDescription}
               handleChange={handleChange}
+              readOnly={isEditing}
             />
 
             <TagInput handleTagSelect={handleTagSelect} />
 
             {/* Submit button */}
-            <div className="form-control col-span-2 mt-6">
-              <input type="submit" value="Einreichen" className="btn" />
-            </div>
+            {!isEditing ? (
+              <div className="form-control col-span-2 mt-6">
+                <input type="submit" value="Einreichen" className="btn" />
+              </div>
+            ) : null}
           </form>
         </div>
       </div>
