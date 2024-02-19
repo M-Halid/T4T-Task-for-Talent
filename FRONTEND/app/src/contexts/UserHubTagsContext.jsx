@@ -1,9 +1,9 @@
 import { createContext, useState } from "react";
 import proptypes from "prop-types";
 
-export const TagsContext = createContext();
+export const UserHubTagsContext = createContext();
 
-export const TagsProvider = ({ children }) => {
+export const UserHubTagsProvider = ({ children }) => {
   const [tags, setTags] = useState({
     "Programming Languages": [
       "JavaScript",
@@ -92,8 +92,9 @@ export const TagsProvider = ({ children }) => {
   );
   const [selectedTags, setSelectedTags] = useState([]);
   const reset = () => setSelectedTags([]);
+
   return (
-    <TagsContext.Provider
+    <UserHubTagsContext.Provider
       value={{
         tags,
         setTags,
@@ -105,11 +106,12 @@ export const TagsProvider = ({ children }) => {
       }}
     >
       {children}
-    </TagsContext.Provider>
+    </UserHubTagsContext.Provider>
   );
 };
-TagsProvider.propTypes = {
+
+UserHubTagsProvider.propTypes = {
   children: proptypes.node,
 };
 
-export default TagsContext;
+export default UserHubTagsContext;

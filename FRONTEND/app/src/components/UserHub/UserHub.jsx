@@ -1,53 +1,50 @@
-import { useState, useContext } from "react";
-import TagInput from "../Tags/TagInput";
-import { TagsContext } from "../../contexts/TagsContext";
-// import UserContext from "../../contexts/UserContext";
-// import TalentContext from "../../contexts/TalentContext";
-// import TaskContext from "../../contexts/TaskContext";
+import { useState, useEffect } from "react";
+import TagInputForSelection from "../Tags/TagInputForSelection";
 import TaskFeed from "../Feed/TaskFeed";
 import TalentFeed from "../Feed/TalentFeed";
+import PropTypes from "prop-types";
+// import TagsContext from "../../contexts/TagsContext";
+
+const Tasks = ({ selectedTags }) => (
+  <div>
+    <TaskFeed selectedTags={selectedTags} />
+  </div>
+);
+
+const Talents = ({ selectedTags }) => (
+  <div>
+    <TalentFeed selectedTags={selectedTags} />
+  </div>
+);
 
 const UserHub = () => {
-  // Feed selection
   const [showTasks, setShowTasks] = useState(true);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [refreshKey, setRefreshKey] = useState(0);
+  // const { reset } = useContext(TagsContext);
 
   const handleToggle = () => {
     setShowTasks(!showTasks);
   };
 
-  const Tasks = () => (
-    <div>
-      <TaskFeed />
-    </div>
-  );
-  const Talents = () => (
-    <div>
-      <TalentFeed />
-    </div>
-  );
+  // useEffect(() => {
+  //   reset();
+  // }, []);
 
-  const showTasksLabel = "Tasks";
-  const showFreelancersLabel = "Talents";
-
-  // Tags
-  const { selectedTags, setSelectedTags } = useContext(TagsContext);
-
-  // // User, Talent, and Task profiles
-  // const { userProfile } = useContext(UserContext);
-  // const { talentProfile } = useContext(TalentContext);
-  // const { taskProfile } = useContext(TaskContext);
-
-  const handleTagSelect = (tag) => {
-    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
-  };
+  useEffect(() => {
+    setRefreshKey((oldKey) => oldKey + 1);
+  }, [selectedTags]);
 
   return (
     <div>
       <div className="flex justify-center items-center pt-12 pb-12 bg-base-100">
+        <button onClick={() => setRefreshKey((oldKey) => oldKey + 1)}>
+          Refresh
+        </button>
         <div className="p-6 bg-base-300 rounded-xl mt-3 mb-10 flex flex-col items-center justify-center space-y-4">
           <h2 className="text-primary mb-2">Choose your view</h2>
           <div className="flex items-center justify-between w-full">
-            <span className="text-secondary">{showTasksLabel}</span>
+            <span className="text-secondary">Tasks</span>
             <label className="switch switch-accent">
               <input
                 type="checkbox"
@@ -56,17 +53,51 @@ const UserHub = () => {
                 className="toggle"
               />
             </label>
-            <span className="text-secondary">{showFreelancersLabel}</span>
+            <span className="text-secondary">Talents</span>
           </div>
-          <TagInput handleTagSelect={handleTagSelect} />
+          <TagInputForSelection
+            selectedTags={selectedTags}
+            handleTagSelect={(tag) => {
+              console.log("Tag selected:", tag); // Log when a tag is selected
+              setSelectedTags((prevTags) => {
+                if (prevTags.includes(tag)) {
+                  // If the tag is already selected, remove it from the array
+                  return prevTags.filter((t) => t !== tag);
+                } else {
+                  // If the tag is not selected, add it to the array
+                  return [...prevTags, tag];
+                }
+              });
+            }}
+          />
         </div>
       </div>
 
       <div className="w-8/10 mx-auto p-6 bg-base-200 rounded-xl shadow-md">
-        {showTasks ? <Tasks /> : <Talents />}
+        {showTasks ? (
+          <TaskFeed
+            key={refreshKey}
+            refreshKey={refreshKey}
+            selectedTags={selectedTags}
+          />
+        ) : (
+          <TalentFeed
+            key={refreshKey}
+            refreshKey={refreshKey}
+            selectedTags={selectedTags}
+          />
+        )}
       </div>
     </div>
   );
+};
+
+Tasks.propTypes = {
+  selectedTags: PropTypes.array.isRequired,
+};
+
+Talents.propTypes = {
+  selectedTags: PropTypes.array.isRequired,
 };
 
 export default UserHub;

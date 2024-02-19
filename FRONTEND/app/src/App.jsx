@@ -18,6 +18,7 @@ import Contact from "./components/Contact/Contact.jsx";
 import About from "./components/About/About.jsx";
 import UserProfile from "./components/Profiles/UserProfile";
 import { TagsProvider } from "./contexts/TagsContext.jsx";
+import { UserHubTagsProvider } from "./contexts/UserHubTagsContext.jsx";
 import UserContext from "./contexts/UserContext";
 import TalentContext from "./contexts/TalentContext";
 import TaskContext from "./contexts/TaskContext";
@@ -98,32 +99,34 @@ function App() {
         <UserContext.Provider value={{ userProfile, setUserProfile }}>
           <TalentContext.Provider value={{ talentProfile, setTalentProfile }}>
             <TaskContext.Provider value={{ taskProfile, setTaskProfile }}>
-              <Router>
-                <div className="flex flex-col min-h-screen">
-                  <Nav />
-                  <div className="flex-grow">
-                    <Routes>
-                      <Route path="/" element={<HeroSection />} />
-                      <Route path="/GetStarted" element={<GetStarted />} />
-                      <Route path="/page1" element={<Page1 />} />
-                      <Route path="/page2" element={<Page2 />} />
-                      <Route path="/page3" element={<Page3 />} />
-                      <Route path="/page4" element={<Page4 />} />
-                      <Route path="/signin" element={<Signin />} />
-                      <Route path="/signup" element={<Signup />} />
-                      <Route path="/create-task" element={<TaskProfile />} />
-                      {taskProfile && taskProfile.taskDescription && (
-                        <p>{taskProfile.taskDescription}</p>
-                      )}
-                      <Route path="/UserHub" element={<UserHub />} />
-                      <Route path="/UserProfile" element={<UserProfile />} />
-                      <Route path="/contact" element={<Contact />} />
-                      <Route path="/about" element={<About />} />
-                    </Routes>
+              <UserHubTagsProvider>
+                <Router>
+                  <div className="flex flex-col min-h-screen">
+                    <Nav />
+                    <div className="flex-grow">
+                      <Routes>
+                        <Route path="/" element={<HeroSection />} />
+                        <Route path="/GetStarted" element={<GetStarted />} />
+                        <Route path="/page1" element={<Page1 />} />
+                        <Route path="/page2" element={<Page2 />} />
+                        <Route path="/page3" element={<Page3 />} />
+                        <Route path="/page4" element={<Page4 />} />
+                        <Route path="/signin" element={<Signin />} />
+                        <Route path="/signup" element={<Signup />} />
+                        <Route path="/create-task" element={<TaskProfile />} />
+                        {taskProfile && taskProfile.taskDescription && (
+                          <p>{taskProfile.taskDescription}</p>
+                        )}
+                        <Route path="/UserHub" element={<UserHub />} />
+                        <Route path="/UserProfile" element={<UserProfile />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/about" element={<About />} />
+                      </Routes>
+                    </div>
+                    <Footer />
                   </div>
-                  <Footer />
-                </div>
-              </Router>
+                </Router>
+              </UserHubTagsProvider>
             </TaskContext.Provider>
           </TalentContext.Provider>
         </UserContext.Provider>
