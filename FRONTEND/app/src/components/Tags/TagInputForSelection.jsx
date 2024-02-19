@@ -2,14 +2,9 @@ import { useState, useContext } from "react";
 import proptypes from "prop-types";
 import { TagsContext } from "../../contexts/TagsContext";
 
-const TagInputForSelection = ({ handleTagSelect }) => {
-  const {
-    tags,
-    selectedTags,
-    selectedCategory,
-    setSelectedCategory,
-    setSelectedTags,
-  } = useContext(TagsContext);
+const TagInputForSelection = ({ selectedTags, handleTagSelect }) => {
+  const { tags, selectedCategory, setSelectedCategory, setSelectedTags } =
+    useContext(TagsContext);
   const [inputValue, setInputValue] = useState("");
 
   const matchingTags = tags[selectedCategory].filter((tag) =>
@@ -71,6 +66,7 @@ const TagInputForSelection = ({ handleTagSelect }) => {
 
 TagInputForSelection.propTypes = {
   handleTagSelect: proptypes.func.isRequired,
+  selectedTags: proptypes.array.isRequired,
 };
 
 export default TagInputForSelection;
