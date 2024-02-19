@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import AuthContext from "../../contexts/AuthContext";
 import Input from "../Profiles/Inputs/Input";
 import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(true);
@@ -17,6 +19,7 @@ const UserProfile = () => {
     linkedin: "",
     education: "",
     languages: "",
+    profilePicture:""
   });
   const [profilePicture, setProfilePicture] = useState(null);
 
@@ -39,14 +42,69 @@ const UserProfile = () => {
             linkedin: data.linkedin,
             education: data.education,
             languages: data.languages,
+            profilePicture: data.profilePicture
           });
         });
     }
   }, [isLoggedIn, authToken]);
 
-  const handleImageUpload = (e) => {
-    setProfilePicture(URL.createObjectURL(e.target.files[0]));
-  };
+  const uploadToFirebase = (file) =>  {
+    const firebaseConfig = {
+          apiKey: "AIzaSyAAznTgkrWuDKdzg9iaB_r4C0_JUEzImy0",
+          authDomain: "talentfilestore.firebaseapp.com",
+          projectId: "talentfilestore",
+          storageBucket: "talentfilestore.appspot.com",
+          messagingSenderId: "892796460454",
+          appId: "1:892796460454:web:001861fc0abb940e6a0367",
+          measurementId: "G-1B8JGT8E6C"
+       };
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage();
+  
+  const storageRef = ref(storage, '/images/' + file.name);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+  uploadTask.on('state_changed',
+    (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case 'paused':
+          console.log('Upload is paused');
+          break;
+        case 'running':
+          console.log('Upload is running');
+          break;
+      }
+    }, 
+    (error) => {
+      switch (error.code) {
+        case 'storage/unauthorized':
+          break;
+        case 'storage/canceled':
+          // User canceled the upload
+          break;
+        case 'storage/unknown':
+          break;
+      }
+    }, 
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        setFormData(prevState => ({ ...prevState, profilePicture: downloadURL }))
+    
+       });
+    }
+  );
+  } 
+
+  const handleImageUpload = async (e) => {
+    try {
+      const file = e.target.files[0];
+       await uploadToFirebase(file);
+     } catch (error) {
+      console.error("Error handling image upload:", error);
+    }
+};
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -84,7 +142,7 @@ const UserProfile = () => {
       if (result.email) {
         setUserEmail(result.email);
       }
-      console.log("nach setuserEmail result:", userEmail);
+    
     } catch (error) {
       console.error("Error updating user profile:", error.message);
     } finally {
@@ -101,7 +159,7 @@ const UserProfile = () => {
               <div className="flex justify-center">
                 <div className="w-64 h-64 overflow-hidden relative border-2 border-base-300 rounded-md">
                   <img
-                    src={profilePicture || profilePlaceholder}
+                    src={formData.profilePicture ? formData.profilePicture : profilePlaceholder}
                     alt="Profile"
                     className="absolute top-0 left-0 w-full h-full object-cover"
                   />
@@ -109,7 +167,8 @@ const UserProfile = () => {
                     type="file"
                     onChange={handleImageUpload}
                     className="w-full h-full absolute top-0 left-0 opacity-0 cursor-pointer"
-                    readOnly={isEditing}
+                    
+                    disabled={isEditing}
                   />
                 </div>
               </div>
