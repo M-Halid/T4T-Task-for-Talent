@@ -82,24 +82,31 @@ const TalentFeed = ({ selectedTags }) => {
   }, [TalentData, selectedTags]);
 
   return (
-    <div className="flex flex-col items-center">
-      {sortedTalentData.map((talent) => {
-        const profile = profileData.find(
-          (profile) => profile._id === talent.userId
-        );
-        if (profile) {
-          return (
-            <div
-              className="grid grid-cols-3 gap-10 bg-accent shadow-md rounded-lg p-4 m-4 w-3/4"
-              key={talent._id}
-            >
-              <UserProfilePreview profile={profile} className="col-span-1" />
-              <TalentProfilePreview talent={talent} className="col-span-2" />
-            </div>
+    <div>
+      <div>
+        <h2 className="text-primary m-5 justify-center text-center  ">
+          Talent Feed
+        </h2>
+      </div>
+      <div className="flex flex-col items-center">
+        {sortedTalentData.map((talent) => {
+          const profile = profileData.find(
+            (profile) => profile._id === talent.userId
           );
-        }
-        return null;
-      })}
+          if (profile) {
+            return (
+              <div
+                className="grid grid-cols-3 gap-10 bg-accent shadow-md rounded-lg p-4 m-4 w-3/4"
+                key={talent._id}
+              >
+                <UserProfilePreview profile={profile} className="col-span-1" />
+                <TalentProfilePreview talent={talent} className="col-span-2" />
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
     </div>
   );
 };
