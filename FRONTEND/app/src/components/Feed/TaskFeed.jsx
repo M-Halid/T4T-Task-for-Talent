@@ -79,24 +79,31 @@ const TaskFeed = ({ selectedTags }) => {
   }, [TaskData, selectedTags]);
 
   return (
-    <div className="flex flex-col items-center">
-      {sortedTaskData.map((task) => {
-        const profile = profileData.find(
-          (profile) => profile._id === task.userId
-        );
-        if (profile) {
-          return (
-            <div
-              className="grid grid-cols-3 gap-10 bg-accent shadow-md rounded-lg p-4 m-4 w-3/4"
-              key={task._id}
-            >
-              <UserProfilePreview profile={profile} className="col-span-1" />
-              <TaskProfilePreview task={task} className="col-span-2" />
-            </div>
+    <div>
+      <div>
+        <h2 className="text-primary m-5 justify-center text-center  ">
+          Task Feed
+        </h2>
+      </div>
+      <div className="flex flex-col items-center">
+        {sortedTaskData.map((task) => {
+          const profile = profileData.find(
+            (profile) => profile._id === task.userId
           );
-        }
-        return null;
-      })}
+          if (profile) {
+            return (
+              <div
+                className="grid grid-cols-3 gap-10 bg-accent shadow-md rounded-lg p-4 m-4 w-3/4"
+                key={task._id}
+              >
+                <UserProfilePreview profile={profile} className="col-span-1" />
+                <TaskProfilePreview task={task} className="col-span-2" />
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
     </div>
   );
 };
