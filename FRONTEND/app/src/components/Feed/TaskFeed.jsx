@@ -1,78 +1,94 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import axios from "axios";
 import UserProfilePreview from "../Profiles/Previews/UserProfilePreview";
 import TaskProfilePreview from "../Profiles/Previews/TaskProfilePreview";
 import AuthContext from "../../contexts/AuthContext";
+import PropTypes from "prop-types";
 
-const TaskFeed = () => {
+const TaskFeed = ({ selectedTags }) => {
   const [TaskData, setTaskData] = useState([]);
   const [profileData, setProfileData] = useState([]);
   const { authToken, isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log("selectedTags updated:", selectedTags);
+  }, [selectedTags]);
+
+  useEffect(() => {
     if (isLoggedIn && authToken) {
-      console.log("Attempting to fetch task profiles...");
       axios
-        .get("http://localhost:3000/getAllTaskProfiles", {
+        .get(`http://localhost:3000/getAllTaskProfiles?nocache=${Date.now()}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         })
         .then((response) => {
-          console.log("Received response from server:", response);
           if (Array.isArray(response.data)) {
-            console.log("Setting TaskData with fetched data:", response.data);
             setTaskData(response.data);
-          } else {
-            console.log("Received non-array data from server:", response.data);
+            console.log("TaskData:", response.data);
           }
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
-    } else {
-      console.log("User is not logged in or authToken is not available");
     }
-    console.log("authToken", authToken);
   }, [authToken, isLoggedIn]);
 
   useEffect(() => {
     if (isLoggedIn && authToken) {
-      console.log("Attempting to fetch user profiles...");
       axios
-        .get("http://localhost:3000/getAllUserProfiles", {
+        .get(`http://localhost:3000/getAllUserProfiles?nocache=${Date.now()}`, {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
         })
         .then((response) => {
-          console.log("Received response from server:", response);
           if (Array.isArray(response.data)) {
-            console.log(
-              "Setting profileData with fetched data:",
-              response.data
-            );
             setProfileData(response.data);
-          } else {
-            console.log("Received non-array data from server:", response.data);
           }
         })
         .catch((error) => {
           console.error("Error fetching profile data:", error);
         });
     }
-    console.log("TaskData", TaskData);
-  }, [authToken, isLoggedIn, TaskData]);
+  }, [authToken, isLoggedIn]);
+
+  const sortedTaskData = useMemo(() => {
+    return [...TaskData]
+      .filter(
+        (task) =>
+          selectedTags.length === 0 ||
+          selectedTags.some((tag) =>
+            task.tags
+              .map((tag) => tag.toLowerCase())
+              .includes(tag.toLowerCase())
+          )
+      )
+      .sort((a, b) => {
+        for (let i = 0; i < selectedTags.length; i++) {
+          const tag = selectedTags[i].toLowerCase();
+          const aHasTag = a.tags.map((tag) => tag.toLowerCase()).includes(tag);
+          const bHasTag = b.tags.map((tag) => tag.toLowerCase()).includes(tag);
+
+          if (aHasTag && !bHasTag) return -1;
+          if (!aHasTag && bHasTag) return 1;
+        }
+
+        return 0;
+      });
+  }, [TaskData, selectedTags]);
 
   return (
     <div className="flex flex-col items-center">
-      {profileData.map((profile) => {
-        const task = TaskData.find((task) => task.userId === profile._id);
-        if (task) {
+      {sortedTaskData.map((task) => {
+        const profile = profileData.find(
+          (profile) => profile._id === task.userId
+        );
+        if (profile) {
           return (
             <div
               className="grid grid-cols-3 gap-10 bg-accent shadow-md rounded-lg p-4 m-4 w-3/4"
-              key={profile._id}
+              key={task._id}
             >
               <UserProfilePreview profile={profile} className="col-span-1" />
               <TaskProfilePreview task={task} className="col-span-2" />
@@ -84,4 +100,9 @@ const TaskFeed = () => {
     </div>
   );
 };
+
+TaskFeed.propTypes = {
+  selectedTags: PropTypes.array.isRequired,
+};
+
 export default TaskFeed;

@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import AuthContext from "../../contexts/AuthContext";
-import TagInput from "../Tags/TagInput";
+import TagInputForStorage from "../Tags/TagInputForStorage";
 import { TagsContext } from "../../contexts/TagsContext";
 import Input from "./Inputs/Input";
 import profilePlaceholder from "../../assets/profilePlaceholder.jpg";
@@ -237,7 +237,7 @@ const TalentProfile = () => {
               readOnly={isEditing}
             />
 
-            <TagInput handleTagSelect={handleTagSelect} />
+            <TagInputForStorage handleTagSelect={handleTagSelect} />
 
             {/* Submit button */}
             {!isEditing ? (

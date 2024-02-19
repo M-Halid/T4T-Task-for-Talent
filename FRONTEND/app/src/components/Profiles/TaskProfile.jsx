@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import AuthContext from "../../contexts/AuthContext";
 import Input from "./Inputs/Input";
-import TagInput from "../Tags/TagInput";
+import TagInputForStorage from "../Tags/TagInputForStorage";
 import { TagsContext } from "../../contexts/TagsContext";
 
 const TaskProfile = () => {
@@ -217,7 +217,7 @@ const TaskProfile = () => {
                 readOnly={isEditing}
               />
             </div>
-            <TagInput handleTagSelect={handleTagSelect} />
+            <TagInputForStorage handleTagSelect={handleTagSelect} />
             {/* Submit button */}
             {!isEditing ? (
               <div className="form-control col-span-2 mt-6">

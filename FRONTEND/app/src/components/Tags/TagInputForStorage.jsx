@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import proptypes from "prop-types";
 import { TagsContext } from "../../contexts/TagsContext";
 
-const TagInput = ({ handleTagSelect }) => {
+const TagInputForStorage = () => {
   const {
     tags,
     selectedTags,
@@ -17,20 +17,12 @@ const TagInput = ({ handleTagSelect }) => {
   );
 
   const handleTagClick = (tag) => {
-    if (handleTagSelect) {
-      handleTagSelect(tag);
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
+    setSelectedTags([...selectedTags, tag]);
     setInputValue("");
   };
 
   const handleTagRemove = (tag) => {
-    if (handleTagSelect) {
-      handleTagSelect(tag);
-    } else {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-    }
+    setSelectedTags(selectedTags.filter((t) => t !== tag));
   };
 
   return (
@@ -75,8 +67,9 @@ const TagInput = ({ handleTagSelect }) => {
   );
 };
 
-TagInput.propTypes = {
+TagInputForStorage.propTypes = {
+  selectedTags: proptypes.array,
   handleTagSelect: proptypes.func,
 };
 
-export default TagInput;
+export default TagInputForStorage;

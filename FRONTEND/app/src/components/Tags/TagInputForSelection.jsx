@@ -2,13 +2,13 @@ import { useState, useContext } from "react";
 import proptypes from "prop-types";
 import { TagsContext } from "../../contexts/TagsContext";
 
-const TagInput = ({ handleTagSelect }) => {
+const TagInputForSelection = ({ handleTagSelect }) => {
   const {
     tags,
     selectedTags,
-    setSelectedTags,
     selectedCategory,
     setSelectedCategory,
+    setSelectedTags,
   } = useContext(TagsContext);
   const [inputValue, setInputValue] = useState("");
 
@@ -17,20 +17,14 @@ const TagInput = ({ handleTagSelect }) => {
   );
 
   const handleTagClick = (tag) => {
-    if (handleTagSelect) {
-      handleTagSelect(tag);
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
+    handleTagSelect(tag);
     setInputValue("");
   };
 
-  const handleTagRemove = (tag) => {
-    if (handleTagSelect) {
-      handleTagSelect(tag);
-    } else {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-    }
+  const handleTagRemove = (tagToRemove) => {
+    setSelectedTags((prevTags) =>
+      prevTags.filter((tag) => tag !== tagToRemove)
+    );
   };
 
   return (
@@ -75,8 +69,8 @@ const TagInput = ({ handleTagSelect }) => {
   );
 };
 
-TagInput.propTypes = {
-  handleTagSelect: proptypes.func,
+TagInputForSelection.propTypes = {
+  handleTagSelect: proptypes.func.isRequired,
 };
 
-export default TagInput;
+export default TagInputForSelection;
