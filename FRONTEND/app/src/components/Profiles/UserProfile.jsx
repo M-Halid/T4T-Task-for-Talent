@@ -50,7 +50,7 @@ const UserProfile = () => {
 
   const uploadToFirebase = (file) =>  {
     const firebaseConfig = {
-          apiKey: "AIzaSyAAznTgkrWuDKdzg9iaB_r4C0_JUEzImy0",
+          apiKey: process.env.GOOGLE_API_KEY,
           authDomain: "talentfilestore.firebaseapp.com",
           projectId: "talentfilestore",
           storageBucket: "talentfilestore.appspot.com",
